@@ -36,21 +36,6 @@ public abstract class Event{
 
     private double totalTaxCollected;
     private double totalDiscountCollected;
-    //////////////////////////////////////////////////////
-    private String nameAvenue;
-    private String nameType;
-    private int pctSeats;
-    private int capacity;
-    private double cost;
-    private int vipPct;
-    private int goldPct;
-    private int silverPct;
-    private int bronzePct;
-    private int generalPct;
-    private int reservedPct;
-    private String fireWorks;
-    private int fireWorksCost;
-    ////////////////////////////////////////////////
 
     private Stadium stadium;
     private Arena arena;
@@ -185,32 +170,8 @@ public abstract class Event{
         this.openAir = openAirIn;
     }
 
-    public Event(int generalPct, String evenType, double goldPrice, String name, int capacity, String time, int reservedExtraPct, String venueType, double vipPrice, double bronzePrice, int silverPct, double generalAdmission, String fireworksPlanned, String venueName, int eventId, int pctSeats, int cost, int vipPct, String date, int goldPct, int fireCost, double silverPrice, int bronzePct) {
-     this.generalPct =generalPct;
-     this.eventType = evenType;
-     this.goldPrice = goldPrice;
-     this.name =name;
-     this.capacity=capacity;
-     this.time = time;
-     this.reservedPct = reservedExtraPct;
-     this.nameType = venueType;
-     this.vipPrice =vipPrice;
-     this.bronzePrice = bronzePrice;
-     this.silverPct = silverPct;
-     this.generalPrice = generalAdmission;
-     this.fireWorks = fireworksPlanned;
-     this.nameAvenue = venueName;
-     this.eventID = eventId;
-     this.pctSeats = pctSeats;
-     this.cost = cost;
-     this.vipPct = vipPct;
-     this.date = date;
-     this.goldPct =goldPct;
-     this.fireWorksCost =fireCost;
-     this.silverPrice = silverPrice;
-     this.bronzePct = bronzePct;
-     // ]  String date, int goldPct, int fireCost, double silverPrice, int bronzePct
-    }
+
+
     //Setters and Getters
 
     /**

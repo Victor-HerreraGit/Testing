@@ -61,9 +61,7 @@ public class Sport extends Event{
         super(eventIDIn,eventTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,arenaIn);
     }
     //    public Event(int eventID, String eventType, String name, String date, String time, double vipPrice, double goldPrice, double silverPrice, double bronzePrice, double generalPrice,Stadium stadiumIn) {
-    public Sport(int generalPct, String evenType, double goldPrice, String name, int capacity, String time, int reservedExtraPct, String venueType, double vipPrice, double bronzePrice, int silverPct, double generalAdmission, String fireworksPlanned, String venueName, int eventId, int pctSeats, int cost, int vipPct, String date, int goldPct, int fireCost, double silverPrice, int bronzePct) {
-        super(generalPct,evenType,goldPrice,name,capacity,time,reservedExtraPct,venueType,vipPrice,bronzePrice,silverPct,generalAdmission,fireworksPlanned,venueName,eventId,pctSeats,cost,vipPct,date,goldPct,fireCost,silverPrice,bronzePct);
-    }
+
 
 }
 

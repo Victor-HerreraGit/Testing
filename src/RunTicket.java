@@ -8,14 +8,21 @@ import java.util.Scanner;
 
 public class RunTicket {
     public static void main(String[] args){
-        ArrayList event = readEventList();
-        for(int i =0;i< event.size();i++){
-            System.out.println(event);
+        ArrayList<Event> eventList = new ArrayList<Event>();
+        eventList = readEventList();
+
+        for(int i =0;i<eventList.size();i++){
+           if(eventList.get(i).getEventType().equals("Sport")){
+               System.out.println(eventList.get(i).getName());
+           }
+
         }
+
+
 
     }
     public static ArrayList<Event> readEventList() {
-        String fileName = "src/EventListPA4FINAL.csv";
+        String fileName = "src/EventListPA4FINAL (1).csv";
         ArrayList<Event> eventsList = new ArrayList<Event>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -25,10 +32,9 @@ public class RunTicket {
             HashMap<String, Integer> MapHeader = new HashMap<String, Integer>();// String -> String 0
             for (int i = 0; i < firstLine.length; i++) {
                 MapHeader.put(firstLine[i], i);
-                System.out.println(i);
             }
-
             while((line =br.readLine())!=null){
+                System.out.println(line);
                 String [] index = line.split(",");
                 String eventTypeIn = index[MapHeader.get("Event Type")];
                 int pctSeatsUnIn = Integer.parseInt(index[MapHeader.get("Pct Seats Unavailable")]);
@@ -53,16 +59,22 @@ public class RunTicket {
                 int vipPctIn = Integer.parseInt(index[MapHeader.get("VIP Pct")]);
                 int goldPctIn = Integer.parseInt(index[MapHeader.get("Gold Pct")]);
                 int fireworkCost = Integer.parseInt(index[MapHeader.get("Fireworks Cost")]);
-              //  Stadium sunBowl= new Stadium (venNameIn,venTypeIn,pctSeatsUnIn,capacityIn,costIn,vipPctIn,goldPctIn,silverPctIn,brzPctIn,genAdPctIn,resExtPctIn,fireworkPlanedIn,fireworkCost);
-                //Event football = new Sport(evenIdIn,eventTypeIn,nameIn,dateIn,timeIn,vipPriceIn,goldPriceIn,silverPriceIn,brzPriceIn,genAdmPriceIn,sunBowl);
-                Event football = new Sport(goldPctIn,eventTypeIn,goldPriceIn,nameIn,capacityIn,timeIn,resExtPctIn,venTypeIn,vipPriceIn,brzPriceIn,silverPctIn,genAdmPriceIn,fireworkPlanedIn,venNameIn,evenIdIn,pctSeatsUnIn,costIn,vipPctIn,dateIn,goldPctIn,fireworkCost,silverPriceIn,brzPctIn);
-                //        super(generalPct,evenType,goldPrice,name,capacity,time,reservedExtraPct,venueType,vipPrice,bronzePrice,silverPct,generalAdmission,fireworksPlanned,venueName,eventId,pctSeats,cost,vipPct,date,goldPct,fireCost,silverPrice,bronzePct);
-                eventsList.add(football);
+
+
+                    Stadium sunBowl = new Stadium(venNameIn, venTypeIn, pctSeatsUnIn, capacityIn, costIn, vipPctIn, goldPctIn, silverPctIn, brzPctIn, genAdPctIn, resExtPctIn, fireworkPlanedIn, fireworkCost);
+                    Event football = new Sport(evenIdIn, eventTypeIn, nameIn, dateIn, timeIn, vipPriceIn, goldPriceIn, silverPriceIn, brzPriceIn, genAdmPriceIn, sunBowl);
+                    eventsList.add(football);
+                    for(int i=0;i<eventsList.size();i++){
+                        System.out.println(eventsList.get(i).getName());
+                    }
 
             }
         }catch(IOException e){
             System.out.println("The file entered does not exist pelase try again.");
             System.exit(0);
+        }catch(ArrayIndexOutOfBoundsException e){
+            System.out.println(e);
+
         }
         return eventsList;
     }
