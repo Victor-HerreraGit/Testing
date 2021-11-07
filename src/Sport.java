@@ -38,9 +38,9 @@ public class Sport extends Event{
      * @param generalIn General price.
      * @param stadiumIn Venue
      */
-    public Sport(int eventIDIn,String eventTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
+    public Sport(int eventIDIn,String eventTypeIn,String venueTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
                  double silverIn,double bronzeIn,double generalIn,Stadium stadiumIn){
-        super(eventIDIn,eventTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,stadiumIn);
+        super(eventIDIn,eventTypeIn,venueTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,stadiumIn);
     }
     /**
      * Constructor of Special.
@@ -56,12 +56,8 @@ public class Sport extends Event{
      * @param generalIn General price.
      * @param arenaIn Venue
      */
-    public Sport(int eventIDIn,String eventTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
+    public Sport(int eventIDIn,String eventTypeIn,String venueTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
                  double silverIn,double bronzeIn,double generalIn,Arena arenaIn){
-        super(eventIDIn,eventTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,arenaIn);
+        super(eventIDIn,eventTypeIn,venueTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,arenaIn);
     }
-    //    public Event(int eventID, String eventType, String name, String date, String time, double vipPrice, double goldPrice, double silverPrice, double bronzePrice, double generalPrice,Stadium stadiumIn) {
-
-
 }
-

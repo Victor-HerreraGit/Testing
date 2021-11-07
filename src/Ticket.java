@@ -18,6 +18,7 @@
 public class Ticket {
     //Attributes
     private int eventID; //Aqui podemos obtener el nombre,fecha y tiempo.
+    private String eventName;
     private String seatType;
     private double seatPrice;
     private int totalTickets;
@@ -34,6 +35,20 @@ public class Ticket {
      * @param totalTicketsIn Total of tickets that were purchased.
      * @param totalAmountIn Total amount of the reservation.
      */
+    public Ticket(int eventIDIn,String eventNameIn,String seatTypeIn,int totalTicketsIn,double totalAmountIn){
+        this.eventID = eventIDIn;
+        this.eventName = eventNameIn;
+        this.seatType = seatTypeIn;
+        this.totalTickets = totalTicketsIn;
+        this.totalAmount = totalAmountIn;
+    }
+    /**
+     * Constructor for Ticket.
+     * @param eventIDIn ID event that was purchased.
+     * @param seatTypeIn Type of seat that was purchased.
+     * @param totalTicketsIn Total of tickets that were purchased.
+     * @param totalAmountIn Total amount of the reservation.
+     */
     public Ticket(int eventIDIn,String seatTypeIn,int totalTicketsIn,double totalAmountIn){
         this.eventID = eventIDIn;
         this.seatType = seatTypeIn;
@@ -41,6 +56,14 @@ public class Ticket {
         this.totalAmount = totalAmountIn;
     }
     //Getters and Setters
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
 
     /**
      * Method provided by Christian A. Gomez.

@@ -1,0 +1,457 @@
+User:Mickey Mouse is in the system.
+Event ID:22 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:22 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:22 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:22 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:22 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:22 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:1 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:5 info was displayed for the user.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+Event ID:33 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:4 info was displayed for the user.
+User ordered 2 gold ticket(s)
+User:Mickey has a ticket now.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+Event ID:4 info was displayed for the user.
+User ordered 5 vip ticket(s)
+User:Mickey has a ticket now.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+Event ID:45 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:100 info was displayed for the user.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User ordered 89  ticket(s)
+User:Mickey has a ticket now.
+User:Mickey Mouse is in the system.
+User ordered 900  ticket(s)
+User:Mickey has a ticket now.
+User:Mickey Mouse is in the system.
+User ordered 3  ticket(s)
+User:Mickey has a ticket now.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+Event ID:5 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:5 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:4 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:5 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:5 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:5 info was displayed for the user.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+Event ID:5 info was displayed for the user.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+Event ID:5 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+Event ID:5 info was displayed for the user.
+User:Mickey Mouse is in the system.
+User:Mickey Mouse is in the system.
+Event ID:5 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:5 info was displayed for the user.
+User:Mickey Mouse is in the system.
+Event ID:5 info was displayed for the user.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+Administrator Menu executed.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:5 info was displayed for the user.
+User ordered 4  ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:890 info was displayed for the user.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User ordered 45 Vip ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User ordered 0 Vip ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User ordered 0 Gold ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User ordered 23 Vip ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User ordered 4 Vip ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User ordered 4 Gold ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User ordered 3 Gold ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:0 info was displayed for the user.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:45 info was displayed for the user.
+User ordered 2 Vip ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:45 info was displayed for the user.
+User ordered 4 Gold ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+Administrator Menu executed.
+An Admin is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:45 info was displayed for the user.
+User ordered 22 Bronze ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:45 info was displayed for the user.
+User ordered 2 Gold ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+Administrator Menu executed.
+An Admin is in the system.
+Administrator Menu executed.
+An Admin is in the system.
+Administrator Menu executed.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected Inquire event by ID.
+Administrator Menu executed.
+Admin selected Inquire event by ID.
+An event was displayed by its event ID.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected inquire event by name.
+An event was displayed by its name.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected inquire event by name.
+An event was displayed by its name.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected add a new event.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected add a new event.
+Processing venueList.csv file
+Administrator Menu executed.
+Admin selected add a new event.
+Adding events in process.
+An Admin is in the system.
+Administrator Menu executed.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected Inquire event by ID.
+An event was displayed by its event ID.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected display customer's information.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:71 info was displayed for the user.
+User ordered 2 Vip ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:45 info was displayed for the user.
+User ordered 4 General ticket(s)
+User:Mickey has a ticket now.
+Single customer in the system.
+A customer is in the system.
+User has initialize a process.
+Single user is creating an order.
+Administrator Menu executed.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected Inquire event by ID.
+Administrator Menu executed.
+Admin selected Inquire event by ID.
+An event was displayed by its event ID.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected inquire event by name.
+An event was displayed by its name.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected add a new event.
+Adding events in process.
+Administrator Menu executed.
+Admin selected add a new event.
+Adding events in process.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected add a new event.
+Adding events in process.
+An Admin is in the system.
+AutoPurchase processing, please give a moment...
+Auto purchase is executing...loading...
+Administrator Menu executed.
+Admin selected display electronic tickets from customers.
+Administrator Menu executed.
+Admin selected display electronic tickets from customers.
+Administrator Menu executed.
+Admin selected display electronic tickets from customers.
+An electronic ticket was displayed.
+Administrator Menu executed.
+Admin selected display electronic tickets from customers.
+Administrator Menu executed.
+Admin selected display electronic tickets from customers.
+Administrator Menu executed.
+Admin selected display electronic tickets from customers.
+An electronic ticket was displayed.
+An electronic ticket was displayed.
+An Admin is in the system.
+AutoPurchase processing, please give a moment...
+Auto purchase is executing...loading...
+Administrator Menu executed.
+Admin selected inquire event by name.
+An event was displayed by its name.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected Inquire event by ID.
+An event was displayed by its event ID.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected display customer's information.
+AutoPurchase processing, please give a moment...
+Auto purchase is executing...loading...
+Administrator Menu executed.
+Admin selected Inquire event by ID.
+An event was displayed by its event ID.
+An Admin is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Natasha Rovelli is in the system.
+Event ID:12 info was displayed for the user.
+User ordered 2 Silver ticket(s)
+User:Natasha has a ticket now.
+Single customer in the system.
+A customer is in the system.
+Administrator Menu executed.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected display electronic tickets from customers.
+An electronic ticket was displayed.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected display electronic tickets from customers.
+An electronic ticket was displayed.
+An Admin is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Jesus Macias is in the system.
+Event ID:100 info was displayed for the user.
+User ordered 4 Gold ticket(s)
+User:Jesus has a ticket now.
+Single customer in the system.
+A customer is in the system.
+User has initialize a process.
+Single user is creating an order.
+User:Mickey Mouse is in the system.
+Event ID:100 info was displayed for the user.
+Administrator Menu executed.
+An Admin is in the system.
+Administrator Menu executed.
+Admin selected add a new event.
+Adding events in process.
+An Admin is in the system.
+User has initialize a process.
+Administrator Menu executed.
+Admin selected add a new event.
+Adding events in process.
+Administrator Menu executed.
+Admin selected add a new event.
+Adding events in process.
+Administrator Menu executed.
+Admin selected add a new event.
+Adding events in process.
+User has initialize a process.
+Multiple user are creating orders.
+Administrator Menu executed.
+Admin selected add a new event.
+Adding events in process.
+Administrator Menu executed.
+Admin selected add a new event.
+Adding events in process.
+Administrator Menu executed.
+Admin selected add a new event.
+Adding events in process.
+Administrator Menu executed.
+Admin selected add a new event.
+Adding events in process.
+An Admin is in the system.

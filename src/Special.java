@@ -38,9 +38,9 @@ public class Special extends Event{
      * @param generalIn General price.
      * @param arenaIn Venue
      */
-    public Special(int eventIDIn,String eventTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
+    public Special(int eventIDIn,String eventTypeIn,String venueTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
                    double silverIn,double bronzeIn,double generalIn,Arena arenaIn){
-        super(eventIDIn,eventTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,arenaIn);
+        super(eventIDIn,eventTypeIn,venueTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,arenaIn);
     }
     /**
      * Constructor of Special.
@@ -56,8 +56,8 @@ public class Special extends Event{
      * @param generalIn General price.
      * @param openAirIn Venue
      */
-    public Special(int eventIDIn,String eventTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
+    public Special(int eventIDIn,String eventTypeIn,String venueTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
                    double silverIn,double bronzeIn,double generalIn,OpenAir openAirIn){
-        super(eventIDIn,eventTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,openAirIn);
+        super(eventIDIn,eventTypeIn,venueTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,openAirIn);
     }
 }

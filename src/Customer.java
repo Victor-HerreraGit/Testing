@@ -339,7 +339,7 @@ public class Customer implements CustomerInterface{
 
     /**
      * Method provided by Christian A. Gomez.
-     * Method taht will display all the important information from the customer such as all the tickets that the
+     * Method that will display all the important information from the customer such as all the tickets that the
      * customer purchased and all that stuff.
      * @return Customer's important information.
      */

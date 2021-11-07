@@ -7,7 +7,7 @@
  *
  * ->Lab Description:
  *   -You have recently been hired to work for the TicketMiner, a company that sells tickets for sporting events,
- *   concerts,special events,etc. You have a few customers thar are interested in creating their events using your
+ *   concerts,special events,etc. You have a few customers' thar are interested in creating their events using your
  *   system.
  *
  * ->By means of this communication I swear that all the program/code written here
@@ -23,4 +23,3 @@ public interface CustomerInterface {
      */
     public void collectTotalDiscounts(double discount);
 }
-

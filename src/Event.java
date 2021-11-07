@@ -22,6 +22,8 @@ public abstract class Event{
     private String name;
     private String date;
     private String time;
+    String venueType;
+
     private double vipPrice;
     private double goldPrice;
     private double silverPrice;
@@ -75,9 +77,10 @@ public abstract class Event{
      * @param generalPrice General price.
      * @param stadiumIn Venue
      */
-    public Event(int eventID, String eventType, String name, String date, String time, double vipPrice, double goldPrice, double silverPrice, double bronzePrice, double generalPrice,Stadium stadiumIn) {
+    public Event(int eventID, String eventType,String venueTypeIn, String name, String date, String time, double vipPrice, double goldPrice, double silverPrice, double bronzePrice, double generalPrice,Stadium stadiumIn) {
         this.eventID = eventID;
         this.eventType = eventType;
+        this.venueType = venueTypeIn;
         this.name = name;
         this.date = date;
         this.time = time;
@@ -102,9 +105,10 @@ public abstract class Event{
      * @param generalPrice General price.
      * @param arenaIn Venue
      */
-    public Event(int eventID, String eventType, String name, String date, String time, double vipPrice, double goldPrice, double silverPrice, double bronzePrice, double generalPrice,Arena arenaIn) {
+    public Event(int eventID, String eventType,String venueTypeIn, String name, String date, String time, double vipPrice, double goldPrice, double silverPrice, double bronzePrice, double generalPrice,Arena arenaIn) {
         this.eventID = eventID;
         this.eventType = eventType;
+        this.venueType = venueTypeIn;
         this.name = name;
         this.date = date;
         this.time = time;
@@ -129,9 +133,10 @@ public abstract class Event{
      * @param generalPrice General price.
      * @param auditoriumIn Venue
      */
-    public Event(int eventID, String eventType, String name, String date, String time, double vipPrice, double goldPrice, double silverPrice, double bronzePrice, double generalPrice,Auditorium auditoriumIn) {
+    public Event(int eventID, String eventType,String venueTypeIn, String name, String date, String time, double vipPrice, double goldPrice, double silverPrice, double bronzePrice, double generalPrice,Auditorium auditoriumIn) {
         this.eventID = eventID;
         this.eventType = eventType;
+        this.venueType = venueTypeIn;
         this.name = name;
         this.date = date;
         this.time = time;
@@ -156,9 +161,10 @@ public abstract class Event{
      * @param generalPrice General price.
      * @param openAirIn Venue
      */
-    public Event(int eventID, String eventType, String name, String date, String time, double vipPrice, double goldPrice, double silverPrice, double bronzePrice, double generalPrice,OpenAir openAirIn) {
+    public Event(int eventID, String eventType,String venueTypeIn, String name, String date, String time, double vipPrice, double goldPrice, double silverPrice, double bronzePrice, double generalPrice,OpenAir openAirIn) {
         this.eventID = eventID;
         this.eventType = eventType;
+        this.venueType = venueTypeIn;
         this.name = name;
         this.date = date;
         this.time = time;
@@ -169,11 +175,18 @@ public abstract class Event{
         this.generalPrice = generalPrice;
         this.openAir = openAirIn;
     }
-
-
-
     //Setters and Getters
+    ////////////////////////////////////////////////////////////
 
+    public String getVenueType() {
+        return venueType;
+    }
+
+    public void setVenueType(String venueType) {
+        this.venueType = venueType;
+    }
+
+    ////////////////////////////////////////////////////////////
     /**
      * Method provided by Christian A. Gomez.
      * Getter of Stadium.
@@ -612,42 +625,176 @@ public abstract class Event{
      */
     @Override
     public String toString() {
-        return "Event ID:"+eventID+"\n"+
-                "->Event Type:"+eventType+"\n"+
-                "->Event Name:"+name+"\n"+
-                "->Date:"+date+"\n"+
-                "->Time:"+time+"\n"+
-                "->Vip Price:"+vipPrice+"\n"+
-                "->Gold Price:"+goldPrice+"\n"+
-                "->Silver Price:"+silverPrice+"\n"+
-                "->Bronze Price:"+bronzePrice+"\n"+
-                "->General Price:"+generalPrice+"\n"+
-                stadium+"\n"+
-                arena+"\n"+
-                auditorium+"\n"+
-                openAir;
+        if(getVenueType().equals("Stadium")){
+            return "Event ID:"+eventID+"\t"+
+                    "->Event Type:"+eventType+"\t"+
+                    "->Event Name:"+name+"\t"+
+                    "->Date:"+date+"\t"+
+                    "->Time:"+time+"\t"+
+                    "->Vip Price:"+vipPrice+"\t"+
+                    "->Gold Price:"+goldPrice+"\t"+
+                    "->Silver Price:"+silverPrice+"\t"+
+                    "->Bronze Price:"+bronzePrice+"\t"+
+                    "->General Price:"+generalPrice+"\t"+
+                    stadium+"\t";
+        }else if(getVenueType().equals("Arena")){
+            return "Event ID:"+eventID+"\t"+
+                    "->Event Type:"+eventType+"\t"+
+                    "->Event Name:"+name+"\t"+
+                    "->Date:"+date+"\t"+
+                    "->Time:"+time+"\t"+
+                    "->Vip Price:"+vipPrice+"\t"+
+                    "->Gold Price:"+goldPrice+"\t"+
+                    "->Silver Price:"+silverPrice+"\t"+
+                    "->Bronze Price:"+bronzePrice+"\t"+
+                    "->General Price:"+generalPrice+"\t"+
+                    arena+"\t";
+        }else if(getVenueType().equals("Auditorium")){
+            return "Event ID:"+eventID+"\t"+
+                    "->Event Type:"+eventType+"\t"+
+                    "->Event Name:"+name+"\t"+
+                    "->Date:"+date+"\t"+
+                    "->Time:"+time+"\t"+
+                    "->Vip Price:"+vipPrice+"\t"+
+                    "->Gold Price:"+goldPrice+"\t"+
+                    "->Silver Price:"+silverPrice+"\t"+
+                    "->Bronze Price:"+bronzePrice+"\t"+
+                    "->General Price:"+generalPrice+"\t"+
+                    auditorium+"\t";
+        }else if(getVenueType().equals("Open Air")){
+            return "Event ID:"+eventID+"\t"+
+                    "->Event Type:"+eventType+"\t"+
+                    "->Event Name:"+name+"\t"+
+                    "->Date:"+date+"\t"+
+                    "->Time:"+time+"\t"+
+                    "->Vip Price:"+vipPrice+"\t"+
+                    "->Gold Price:"+goldPrice+"\t"+
+                    "->Silver Price:"+silverPrice+"\t"+
+                    "->Bronze Price:"+bronzePrice+"\t"+
+                    "->General Price:"+generalPrice+"\t"+
+                    openAir+"\n";
+        }else{
+            return "";
+        }
     }
-
+    /**
+     * Method provided by Christian A. Gomez.
+     * toString() method.
+     * @return information from the event.
+     */
+    public String toStringCustomer() {
+        if(getVenueType().equals("Stadium")){
+            return "Event ID:"+eventID+"\n"+
+                    "->Event Type:"+eventType+"\n"+
+                    "->Event Name:"+name+"\n"+
+                    "->Date:"+date+"\n"+
+                    "->Time:"+time+"\n"+
+                    "->Vip Price:"+vipPrice+"\n"+
+                    "->Gold Price:"+goldPrice+"\n"+
+                    "->Silver Price:"+silverPrice+"\n"+
+                    "->Bronze Price:"+bronzePrice+"\n"+
+                    "->General Price:"+generalPrice+"\n"+
+                    stadium+"\n";
+        }else if(getVenueType().equals("Arena")){
+            return "Event ID:"+eventID+"\n"+
+                    "->Event Type:"+eventType+"\n"+
+                    "->Event Name:"+name+"\n"+
+                    "->Date:"+date+"\n"+
+                    "->Time:"+time+"\n"+
+                    "->Vip Price:"+vipPrice+"\n"+
+                    "->Gold Price:"+goldPrice+"\n"+
+                    "->Silver Price:"+silverPrice+"\n"+
+                    "->Bronze Price:"+bronzePrice+"\n"+
+                    "->General Price:"+generalPrice+"\n"+
+                    arena+"\n";
+        }else if(getVenueType().equals("Auditorium")){
+            return "Event ID:"+eventID+"\n"+
+                    "->Event Type:"+eventType+"\n"+
+                    "->Event Name:"+name+"\n"+
+                    "->Date:"+date+"\n"+
+                    "->Time:"+time+"\n"+
+                    "->Vip Price:"+vipPrice+"\n"+
+                    "->Gold Price:"+goldPrice+"\n"+
+                    "->Silver Price:"+silverPrice+"\n"+
+                    "->Bronze Price:"+bronzePrice+"\n"+
+                    "->General Price:"+generalPrice+"\n"+
+                    auditorium+"\n";
+        }else if(getVenueType().equals("Open Air")){
+            return "Event ID:"+eventID+"\n"+
+                    "->Event Type:"+eventType+"\n"+
+                    "->Event Name:"+name+"\n"+
+                    "->Date:"+date+"\n"+
+                    "->Time:"+time+"\n"+
+                    "->Vip Price:"+vipPrice+"\n"+
+                    "->Gold Price:"+goldPrice+"\n"+
+                    "->Silver Price:"+silverPrice+"\n"+
+                    "->Bronze Price:"+bronzePrice+"\n"+
+                    "->General Price:"+generalPrice+"\n"+
+                    openAir+"\n";
+        }else{
+            return "";
+        }
+    }
     /**
      * Method provided by Christian A. Gomez.
      * This method display specific information to the administrator.
      * @return A string with specific information.
      */
-    public String displayAdmin(){
-        return "\t ->name: " + getName()+"\n"+
-                "\t ->date: " + getDate()+"\n"+
-                "\t ->time: " + getTime()+"\n"+
-                "\t ->Total revenue for VIP tickets:" +totalCollectedVip+"\n"+
-                "\t ->Total revenue for Gold tickets:" + totalCollectedGold+"\n"+
-                "\t ->Total revenue for Silver tickets:" + totalCollectedSilver+"\n"+
-                "\t ->Total revenue for Bronze tickets:: " + totalCollectedBronze+"\n"+
-                "\t ->Total revenue for General tickets:" + totalCollectedGeneral+"\n"+
-                "\t ->Total revenue for all tickets:"+ totalCollected()+"\n"+
-                "\t ->Total Taxes Collected:"+totalTaxCollected+"\n"+
-                "\t ->Total Discount Collected:"+getTotalDiscountCollected()+"\n"+
-                "\t"+ stadium+"\n"+
-                "\t"+ auditorium+"\n"+
-                "\t"+ arena+"\n"+
-                "\t"+ openAir;
+    public String displayAdmin2(){
+        if(getVenueType().equals("Stadium")){
+            return "\t ->name: " + getName()+"\n"+
+                    "\t ->date: " + getDate()+"\n"+
+                    "\t ->time: " + getTime()+"\n"+
+                    "\t ->Total revenue for VIP tickets:" +totalCollectedVip+"\n"+
+                    "\t ->Total revenue for Gold tickets:" + totalCollectedGold+"\n"+
+                    "\t ->Total revenue for Silver tickets:" + totalCollectedSilver+"\n"+
+                    "\t ->Total revenue for Bronze tickets:: " + totalCollectedBronze+"\n"+
+                    "\t ->Total revenue for General tickets:" + totalCollectedGeneral+"\n"+
+                    "\t ->Total revenue for all tickets:"+ totalCollected()+"\n"+
+                    "\t ->Total Taxes Collected:"+totalTaxCollected+"\n"+
+                    "\t ->Total Discount Collected:"+getTotalDiscountCollected()+"\n"+
+                    "\t"+ stadium.toStringAdmin()+"\n";
+        }else if(getVenueType().equals("Arena")){
+            return "\t ->name: " + getName()+"\n"+
+                    "\t ->date: " + getDate()+"\n"+
+                    "\t ->time: " + getTime()+"\n"+
+                    "\t ->Total revenue for VIP tickets:" +totalCollectedVip+"\n"+
+                    "\t ->Total revenue for Gold tickets:" + totalCollectedGold+"\n"+
+                    "\t ->Total revenue for Silver tickets:" + totalCollectedSilver+"\n"+
+                    "\t ->Total revenue for Bronze tickets:: " + totalCollectedBronze+"\n"+
+                    "\t ->Total revenue for General tickets:" + totalCollectedGeneral+"\n"+
+                    "\t ->Total revenue for all tickets:"+ totalCollected()+"\n"+
+                    "\t ->Total Taxes Collected:"+totalTaxCollected+"\n"+
+                    "\t ->Total Discount Collected:"+getTotalDiscountCollected()+"\n"+
+                    "\t"+ arena.toStringAdmin()+"\n";
+        }else if(getVenueType().equals("Auditorium")){
+            return "\t ->name: " + getName()+"\n"+
+                    "\t ->date: " + getDate()+"\n"+
+                    "\t ->time: " + getTime()+"\n"+
+                    "\t ->Total revenue for VIP tickets:" +totalCollectedVip+"\n"+
+                    "\t ->Total revenue for Gold tickets:" + totalCollectedGold+"\n"+
+                    "\t ->Total revenue for Silver tickets:" + totalCollectedSilver+"\n"+
+                    "\t ->Total revenue for Bronze tickets:: " + totalCollectedBronze+"\n"+
+                    "\t ->Total revenue for General tickets:" + totalCollectedGeneral+"\n"+
+                    "\t ->Total revenue for all tickets:"+ totalCollected()+"\n"+
+                    "\t ->Total Taxes Collected:"+totalTaxCollected+"\n"+
+                    "\t ->Total Discount Collected:"+getTotalDiscountCollected()+"\n"+
+                    "\t"+ auditorium.toStringAdmin()+"\n";
+        }else if(getVenueType().equals("Open Air")){
+            return "\t ->name: " + getName()+"\n"+
+                    "\t ->date: " + getDate()+"\n"+
+                    "\t ->time: " + getTime()+"\n"+
+                    "\t ->Total revenue for VIP tickets:" +totalCollectedVip+"\n"+
+                    "\t ->Total revenue for Gold tickets:" + totalCollectedGold+"\n"+
+                    "\t ->Total revenue for Silver tickets:" + totalCollectedSilver+"\n"+
+                    "\t ->Total revenue for Bronze tickets:: " + totalCollectedBronze+"\n"+
+                    "\t ->Total revenue for General tickets:" + totalCollectedGeneral+"\n"+
+                    "\t ->Total revenue for all tickets:"+ totalCollected()+"\n"+
+                    "\t ->Total Taxes Collected:"+totalTaxCollected+"\n"+
+                    "\t ->Total Discount Collected:"+getTotalDiscountCollected()+"\n"+
+                    "\t"+ openAir.toStringAdmin()+"\n";
+        }else {
+            return "";
+        }
     }
 }

@@ -63,4 +63,3 @@ public class OpenAir extends Venue{
         super(nameVenue,venueType,pctSeats,capacity,cost,vipPct,goldPct,silverPct,bronzePct,generalPct,reservedPct);
     }
 }
-

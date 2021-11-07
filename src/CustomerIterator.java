@@ -114,5 +114,12 @@ public interface CustomerIterator {
      * @return A string with the special information with all the customer's tickets.
      */
     public String electronicTicket(int position);
-}
 
+    /**
+     * Method provided by Christian A. Gomez.
+     * This method is in charge to check and display the exact balance from the customer.
+     * @param position customer's position.
+     * @return the total customer's balance.
+     */
+    public double checkBalance(int position);
+}

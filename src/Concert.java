@@ -40,9 +40,9 @@ public class Concert extends Event{
      * @param generalIn General price.
      * @param stadium Venue
      */
-    public Concert(int eventIDIn,String eventTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
+    public Concert(int eventIDIn,String eventTypeIn,String venueTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
                    double silverIn,double bronzeIn,double generalIn,Stadium stadium){
-        super(eventIDIn,eventTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,stadium);
+        super(eventIDIn,eventTypeIn,venueTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,stadium);
     }
     /**
      * Constructor of Concert.
@@ -58,9 +58,9 @@ public class Concert extends Event{
      * @param generalIn General price.
      * @param arena Venue
      */
-    public Concert(int eventIDIn,String eventTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
+    public Concert(int eventIDIn,String eventTypeIn,String venueTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
                    double silverIn,double bronzeIn,double generalIn,Arena arena){
-        super(eventIDIn,eventTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,arena);
+        super(eventIDIn,eventTypeIn,venueTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,arena);
     }
     /**
      * Constructor of Concert.
@@ -76,9 +76,9 @@ public class Concert extends Event{
      * @param generalIn General price.
      * @param auditoriumIn Venue
      */
-    public Concert(int eventIDIn,String eventTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
+    public Concert(int eventIDIn,String eventTypeIn,String venueTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
                    double silverIn,double bronzeIn,double generalIn,Auditorium auditoriumIn){
-        super(eventIDIn,eventTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,auditoriumIn);
+        super(eventIDIn,eventTypeIn,venueTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,auditoriumIn);
     }
     /**
      * Constructor of Concert.
@@ -94,8 +94,8 @@ public class Concert extends Event{
      * @param generalIn General price.
      * @param openAirIn Venue.
      */
-    public Concert(int eventIDIn,String eventTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
+    public Concert(int eventIDIn,String eventTypeIn,String venueTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
                    double silverIn,double bronzeIn,double generalIn,OpenAir openAirIn){
-        super(eventIDIn,eventTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,openAirIn);
+        super(eventIDIn,eventTypeIn,venueTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,openAirIn);
     }
 }
