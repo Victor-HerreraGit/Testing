@@ -1,2 +1,0 @@
-Customer:customerID:1, firstName:'Mickey', lastName:'Mouse', balance:13465.18
-[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
