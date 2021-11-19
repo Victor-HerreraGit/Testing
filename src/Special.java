@@ -28,6 +28,7 @@ public class Special extends Event{
      * Constructor of Special.
      * @param eventIDIn Event ID.
      * @param eventTypeIn Event Type.
+     * @param venueTypeIn venue type.
      * @param nameIn Name of the event.
      * @param dateIn Date of the event.
      * @param timeIn Time of the event.
@@ -46,6 +47,7 @@ public class Special extends Event{
      * Constructor of Special.
      * @param eventIDIn Event ID.
      * @param eventTypeIn Event Type.
+     * @param venueTypeIn venue type.
      * @param nameIn Name of the event.
      * @param dateIn Date of the event.
      * @param timeIn Time of the event.
@@ -59,5 +61,43 @@ public class Special extends Event{
     public Special(int eventIDIn,String eventTypeIn,String venueTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
                    double silverIn,double bronzeIn,double generalIn,OpenAir openAirIn){
         super(eventIDIn,eventTypeIn,venueTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,openAirIn);
+    }
+    /**
+     * Constructor of Special.
+     * @param eventIDIn Event ID.
+     * @param eventTypeIn Event Type.
+     * @param venueTypeIn venue type.
+     * @param nameIn Name of the event.
+     * @param dateIn Date of the event.
+     * @param timeIn Time of the event.
+     * @param vipIn Vip price.
+     * @param goldIn Gold price.
+     * @param silverIn Silver price.
+     * @param bronzeIn Bronze price.
+     * @param generalIn General price.
+     * @param stadiumIn Venue
+     */
+    public Special(int eventIDIn,String eventTypeIn,String venueTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
+                   double silverIn,double bronzeIn,double generalIn,Stadium stadiumIn){
+        super(eventIDIn,eventTypeIn,venueTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,stadiumIn);
+    }
+    /**
+     * Constructor of Special.
+     * @param eventIDIn Event ID.
+     * @param eventTypeIn Event Type.
+     * @param venueTypeIn venue type.
+     * @param nameIn Name of the event.
+     * @param dateIn Date of the event.
+     * @param timeIn Time of the event.
+     * @param vipIn Vip price.
+     * @param goldIn Gold price.
+     * @param silverIn Silver price.
+     * @param bronzeIn Bronze price.
+     * @param generalIn General price.
+     * @param auditoriumIn Venue
+     */
+    public Special(int eventIDIn,String eventTypeIn,String venueTypeIn,String nameIn,String dateIn,String timeIn,double vipIn,double goldIn,
+                   double silverIn,double bronzeIn,double generalIn,Auditorium auditoriumIn){
+        super(eventIDIn,eventTypeIn,venueTypeIn,nameIn,dateIn,timeIn,vipIn,goldIn,silverIn,bronzeIn,generalIn,auditoriumIn);
     }
 }

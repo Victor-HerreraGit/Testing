@@ -1,5 +1,3 @@
-
-
 /**
  * ->Author:Christian Alberto Gomez and Victor Herrera.
  * ->Date: 11/01/21
@@ -17,13 +15,14 @@
  *   Also, by this communication I confirm that I did not request or use
  *   any type of prohibited assistance for this assignment.
  */
-        import java.io.*;
-        import java.text.DateFormat;
-        import java.text.ParseException;
-        import java.text.SimpleDateFormat;
-        import java.util.*;
 
-public class RunTicket {
+import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+public class RunTicketMiner{
     public static void main(String[] args) {
 
         ArrayList<Event> eventList = generateEventList(); //ArrayList of Events
@@ -44,7 +43,7 @@ public class RunTicket {
      * Calls will be made to this function to verify input quickly
      * **/
     public static void checkIncorrectInput(int input){
-        if(input>3){
+        if(input>4){
             System.out.println("You have entered a menu option that does not exist"+"\n"+"Try again!!!!!!!!!");
             startMenu();
         }
@@ -59,36 +58,47 @@ public class RunTicket {
      * To fix this problem the function was made to handle this situation.
      * **/
     public static void startMenu(){
+        StringRepo message = new StringRepo();
+        Singleton singleInstance = Singleton.getInstance();
+
         ArrayList<Event> eventList = generateEventList();
         ArrayList<AutoPurchase> autoPurchase = generateCustomerPurchase();
         CustomerRepository customerRepository = generateCustomerRepository();
         Scanner scr = new Scanner(System.in);
-        try {
-            int doItAgain;
 
-            do {
-                //Por el momento yo estare implementando la opcion de ADMINISTRADOR
-                System.out.println("Good day! Please enter (1) for Administrator. (2) for Customer. (3) AutoPurchase:");
-                int user = scr.nextInt();
-                checkIncorrectInput(user);
+            boolean repeat = true;
+            int doItAgain=0;
 
-                checkUserIdentity(user, eventList, customerRepository, autoPurchase);
+                while (repeat) {
+                    try {
+                        //Por el momento yo estare implementando la opcion de ADMINISTRADOR
+                        System.out.println("Good day Welcome to TicketMiner!" + "\n" + "Please enter menu option:" + "\n" + "(1) Administrator" + "\n" + "(2) Customer" + "\n" + "(3) AutoPurchase" + "\n" + "(4) EXIT");
+                        int user = scr.nextInt();
+                        checkIncorrectInput(user);
+                        checkUserIdentity(user, eventList, customerRepository, autoPurchase);
 
-                System.out.println("Enter: (1)Do it again (2) EXIT");
-                doItAgain = scr.nextInt();
+                        System.out.println("Enter 1 to switch to customer"+ "\n" +"Enter 2 return to Admin" + "\n" + "Enter any key to return to main menu");
+                        doItAgain = scr.nextInt();
+                        if (doItAgain == 1) {
+                            individualOrder(customerRepository, eventList);
+                        }
+                        else if(doItAgain==2){
+                            administratorMenu(eventList,customerRepository);
 
-            } while (doItAgain == 1);
+                        }
+                        else{
+                            singleInstance.printMessage(message.returningMainMenu());
+                        }
 
-        }catch(InputMismatchException e){
-            System.out.println("Expecting a numeric value invalid input was detected try again................");
-            startMenu();
-        }
-        try {
-            generateCsvCustomer(customerRepository);
-            generateCsvEvent(eventList);
-        } catch (IOException e) {
-           System.out.println("The file was not found please ensure file exist");
-        }
+                    }catch (InputMismatchException e){
+                        singleInstance.printMessage(message.returningMainMenu());
+                        scr.next();
+                    }catch (IOException e){
+                        System.out.println("file not found verify your documents and return again");
+                    }
+                }
+
+
     }
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -169,7 +179,7 @@ public class RunTicket {
      */
     public static void totalTicketsSport(int i,String ticket, int numTickets, ArrayList<Event> events) {
         if (events.get(i).getVenueType().equals("Stadium")) {
-            if (ticket.equals("VIP")|| ticket.equals("Vip")) {
+            if (ticket.equalsIgnoreCase("vip")) {
                 //Check if there are tickets
                 if(events.get(i).getStadium().getVipPct()<numTickets){
                     System.out.println("No more VIP tickets at Stadium(1)");
@@ -179,7 +189,7 @@ public class RunTicket {
                     events.get(i).getStadium().subVipPct(numTickets);
                     events.get(i).getStadium().totalSeatsVipSold(numTickets);
                 }
-            } else if (ticket.equals("Gold")) {
+            } else if (ticket.equalsIgnoreCase("gold")) {
                 if(events.get(i).getStadium().getGoldPct()<numTickets){
                     System.out.println("No more GOLD tickets at Stadium(1)");
                 }else {
@@ -188,7 +198,7 @@ public class RunTicket {
                     events.get(i).getStadium().subGoldPct(numTickets);
                     events.get(i).getStadium().totalSeatsGoldSold(numTickets);
                 }
-            } else if (ticket.equals("Silver")) {
+            } else if (ticket.equalsIgnoreCase("silver")) {
                 if(events.get(i).getStadium().getSilverPct()<numTickets){
                     System.out.println("No more SILVER tickets at Stadium(1)");
                 }else {
@@ -197,7 +207,7 @@ public class RunTicket {
                     events.get(i).getStadium().subSilverPct(numTickets);
                     events.get(i).getStadium().totalSeatsSilverSold(numTickets);
                 }
-            } else if (ticket.equals("Bronze")) {
+            } else if (ticket.equalsIgnoreCase("bronze")) {
                 if(events.get(i).getStadium().getBronzePct()<numTickets){
                     System.out.println("No more BRONZE tickets at Stadium(1)");
                 }else {
@@ -206,7 +216,7 @@ public class RunTicket {
                     events.get(i).getStadium().subBronzePct(numTickets);
                     events.get(i).getStadium().totalSeatsBronzeSold(numTickets);
                 }
-            } else if (ticket.equals("General") || ticket.equals("General Admission")) {
+            } else if (ticket.equalsIgnoreCase("general") || ticket.equalsIgnoreCase("general admission")) {
                 if(events.get(i).getStadium().getGeneralPct()<numTickets){
                     System.out.println("No more GENERAL tickets at Stadium(1)");
                 }else {
@@ -219,7 +229,7 @@ public class RunTicket {
                 System.out.println("ERROR!");
             }
         } else if (events.get(i).getVenueType().equals("Arena")) {
-            if (ticket.equals("VIP")|| ticket.equals("Vip")) {
+            if (ticket.equalsIgnoreCase("vip")) {
                 if(events.get(i).getArena().getVipPct()<numTickets){
                     System.out.println("No more VIP tickets at Arena(1)");
                 }else {
@@ -228,7 +238,7 @@ public class RunTicket {
                     events.get(i).getArena().subVipPct(numTickets);
                     events.get(i).getArena().totalSeatsVipSold(numTickets);
                 }
-            } else if (ticket.equals("Gold")) {
+            } else if (ticket.equalsIgnoreCase("gold")) {
                 if(events.get(i).getArena().getGoldPct()<numTickets){
                     System.out.println("No more GOLD tickets at Arena(1)");
                 }else {
@@ -237,7 +247,7 @@ public class RunTicket {
                     events.get(i).getArena().subGoldPct(numTickets);
                     events.get(i).getArena().totalSeatsGoldSold(numTickets);
                 }
-            } else if (ticket.equals("Silver")) {
+            } else if (ticket.equalsIgnoreCase("silver")) {
                 if(events.get(i).getArena().getSilverPct()<numTickets){
                     System.out.println("No more SILVER tickets at Arena(1)");
                 }else {
@@ -246,7 +256,7 @@ public class RunTicket {
                     events.get(i).getArena().subSilverPct(numTickets);
                     events.get(i).getArena().totalSeatsSilverSold(numTickets);
                 }
-            } else if (ticket.equals("Bronze")) {
+            } else if (ticket.equalsIgnoreCase("bronze")) {
                 if(events.get(i).getArena().getBronzePct()<numTickets){
                     System.out.println("No more BRONZE tickets at Arena(1)");
                 }else {
@@ -255,7 +265,7 @@ public class RunTicket {
                     events.get(i).getArena().subBronzePct(numTickets);
                     events.get(i).getArena().totalSeatsBronzeSold(numTickets);
                 }
-            } else if (ticket.equals("General") || ticket.equals("General Admission")) {
+            } else if (ticket.equalsIgnoreCase("general") || ticket.equalsIgnoreCase("general admission")) {
                 if(events.get(i).getArena().getGeneralPct()<numTickets){
                     System.out.println("No more GENERAL tickets at Arena(1)");
                 }else {
@@ -264,8 +274,106 @@ public class RunTicket {
                     events.get(i).getArena().subGeneralPct(numTickets);
                     events.get(i).getArena().totalSeatsGeneralSold(numTickets);
                 }
-            } else {
+            }else {
                 System.out.println("ERROR! --> totalTicketSport()!!!");
+            }
+        }else if(events.get(i).getVenueType().equals("Auditorium")){
+            if (ticket.equalsIgnoreCase("vip")) {
+                if(events.get(i).getAuditorium().getVipPct()<numTickets){
+                    System.out.println("No more VIP tickets at Auditorium(1)");
+                }else {
+                    double total = events.get(i).getVipPrice();
+                    events.get(i).getAuditorium().totalVipRevenue(numTickets, total);
+                    events.get(i).getAuditorium().subVipPct(numTickets);
+                    events.get(i).getAuditorium().totalSeatsVipSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("gold")) {
+                if(events.get(i).getAuditorium().getGoldPct()<numTickets){
+                    System.out.println("No more GOLD tickets at Auditorium(1)");
+                }else {
+                    double total = events.get(i).getGoldPrice();
+                    events.get(i).getAuditorium().totalGoldRevenue(numTickets, total);
+                    events.get(i).getAuditorium().subGoldPct(numTickets);
+                    events.get(i).getAuditorium().totalSeatsGoldSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("silver")) {
+                if(events.get(i).getAuditorium().getSilverPct()<numTickets){
+                    System.out.println("No more SILVER tickets at Auditorium(1)");
+                }else {
+                    double total = events.get(i).getSilverPrice();
+                    events.get(i).getAuditorium().totalSilverRevenue(numTickets, total);
+                    events.get(i).getAuditorium().subSilverPct(numTickets);
+                    events.get(i).getAuditorium().totalSeatsSilverSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("bronze")) {
+                if(events.get(i).getAuditorium().getBronzePct()<numTickets){
+                    System.out.println("No more BRONZE tickets at Auditorium(1)");
+                }else {
+                    double total = events.get(i).getBronzePrice();
+                    events.get(i).getAuditorium().totalBronzeRevenue(numTickets, total);
+                    events.get(i).getAuditorium().subBronzePct(numTickets);
+                    events.get(i).getAuditorium().totalSeatsBronzeSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("general") || ticket.equalsIgnoreCase("general admission")) {
+                if(events.get(i).getAuditorium().getGeneralPct()<numTickets){
+                    System.out.println("No more GENERAL tickets at Auditorium(1)");
+                }else {
+                    double total = events.get(i).getGeneralPrice();
+                    events.get(i).getAuditorium().totalGeneralRevenue(numTickets, total);
+                    events.get(i).getAuditorium().subGeneralPct(numTickets);
+                    events.get(i).getAuditorium().totalSeatsGeneralSold(numTickets);
+                }
+            } else {
+                System.out.println("ERROR!");
+            }
+        }else if(events.get(i).getVenueType().equals("Open Air")){
+            if (ticket.equalsIgnoreCase("vip")) {
+                if(events.get(i).getOpenAir().getVipPct()<numTickets){
+                    System.out.println("No more VIP tickets at Open Air(1)");
+                }else {
+                    double total = events.get(i).getVipPrice();
+                    events.get(i).getOpenAir().totalVipRevenue(numTickets, total);
+                    events.get(i).getOpenAir().subVipPct(numTickets);
+                    events.get(i).getOpenAir().totalSeatsVipSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("gold")) {
+                if(events.get(i).getOpenAir().getGoldPct()<numTickets){
+                    System.out.println("No more GOLD tickets at Open Air(1)");
+                }else {
+                    double total = events.get(i).getGoldPrice();
+                    events.get(i).getOpenAir().totalGoldRevenue(numTickets, total);
+                    events.get(i).getOpenAir().subGoldPct(numTickets);
+                    events.get(i).getOpenAir().totalSeatsGoldSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("silver")) {
+                if(events.get(i).getOpenAir().getSilverPct()<numTickets){
+                    System.out.println("No more SILVER tickets at Open Air(1)");
+                }else {
+                    double total = events.get(i).getSilverPrice();
+                    events.get(i).getOpenAir().totalSilverRevenue(numTickets, total);
+                    events.get(i).getOpenAir().subSilverPct(numTickets);
+                    events.get(i).getOpenAir().totalSeatsSilverSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("bronze")) {
+                if(events.get(i).getOpenAir().getBronzePct()<numTickets){
+                    System.out.println("No more BRONZE tickets at Open Air(1)");
+                }else {
+                    double total = events.get(i).getBronzePrice();
+                    events.get(i).getOpenAir().totalBronzeRevenue(numTickets, total);
+                    events.get(i).getOpenAir().subBronzePct(numTickets);
+                    events.get(i).getOpenAir().totalSeatsBronzeSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("general")|| ticket.equalsIgnoreCase("general admission")) {
+                if(events.get(i).getOpenAir().getGeneralPct()<numTickets){
+                    System.out.println("No more GENERAL tickets at Open Air(1)");
+                }else {
+                    double total = events.get(i).getGeneralPrice();
+                    events.get(i).getOpenAir().totalGeneralRevenue(numTickets, total);
+                    events.get(i).getOpenAir().subGeneralPct(numTickets);
+                    events.get(i).getOpenAir().totalSeatsGeneralSold(numTickets);
+                }
+            }else{
+                System.out.println("ERROR!");
             }
         } else {
             System.out.println("ERROR EN totalTicketsSport()!!!!");
@@ -282,7 +390,7 @@ public class RunTicket {
      */
     public static void totalTicketsConcert(int i,String ticket, int numTickets, ArrayList<Event> events) {
         if (events.get(i).getVenueType().equals("Stadium")) {
-            if (ticket.equals("VIP")|| ticket.equals("Vip")) {
+            if (ticket.equalsIgnoreCase("vip")) {
                 if(events.get(i).getStadium().getVipPct()<numTickets){
                     System.out.println("No more VIP tickets at Stadium(2)"); //(2) es para decir que esto es de concert.
                 }else {
@@ -291,7 +399,7 @@ public class RunTicket {
                     events.get(i).getStadium().subVipPct(numTickets);
                     events.get(i).getStadium().totalSeatsVipSold(numTickets);
                 }
-            } else if (ticket.equals("Gold")) {
+            } else if (ticket.equalsIgnoreCase("gold")) {
                 if(events.get(i).getStadium().getGoldPct()<numTickets){
                     System.out.println("No more GOLD tickets at Stadium(2)");
                 }else {
@@ -300,7 +408,7 @@ public class RunTicket {
                     events.get(i).getStadium().subGoldPct(numTickets);
                     events.get(i).getStadium().totalSeatsGoldSold(numTickets);
                 }
-            } else if (ticket.equals("Silver")) {
+            } else if (ticket.equalsIgnoreCase("silver")) {
                 if(events.get(i).getStadium().getSilverPct()<numTickets){
                     System.out.println("No more SILVER tickets at Stadium(2)");
                 }else {
@@ -309,7 +417,7 @@ public class RunTicket {
                     events.get(i).getStadium().subSilverPct(numTickets);
                     events.get(i).getStadium().totalSeatsSilverSold(numTickets);
                 }
-            } else if (ticket.equals("Bronze")) {
+            } else if (ticket.equalsIgnoreCase("bronze")) {
                 if(events.get(i).getStadium().getBronzePct()<numTickets){
                     System.out.println("No more BRONZE tickets at Stadium(2)");
                 }else {
@@ -318,7 +426,7 @@ public class RunTicket {
                     events.get(i).getStadium().subBronzePct(numTickets);
                     events.get(i).getStadium().totalSeatsBronzeSold(numTickets);
                 }
-            } else if (ticket.equals("General") || ticket.equals("General Admission")) {
+            } else if (ticket.equalsIgnoreCase("general") || ticket.equalsIgnoreCase("general admission")) {
                 if(events.get(i).getStadium().getGeneralPct()<numTickets){
                     System.out.println("No more GENERAL tickets at Stadium(2)");
                 }else {
@@ -331,7 +439,7 @@ public class RunTicket {
                 System.out.println("ERROR!");
             }
         } else if (events.get(i).getVenueType().equals("Arena")) {////////////////////////////////////////
-            if (ticket.equals("VIP")|| ticket.equals("Vip")) {
+            if (ticket.equalsIgnoreCase("vip")) {
                 if(events.get(i).getArena().getVipPct()<numTickets){
                     System.out.println("No more VIP tickets at Arena(2)");
                 }else {
@@ -340,7 +448,7 @@ public class RunTicket {
                     events.get(i).getArena().subVipPct(numTickets);
                     events.get(i).getArena().totalSeatsVipSold(numTickets);
                 }
-            } else if (ticket.equals("Gold")) {
+            } else if (ticket.equalsIgnoreCase("gold")) {
                 if(events.get(i).getArena().getGoldPct()<numTickets){
                     System.out.println("No more GOLD tickets at Arena(2)");
                 }else {
@@ -349,7 +457,7 @@ public class RunTicket {
                     events.get(i).getArena().subGoldPct(numTickets);
                     events.get(i).getArena().totalSeatsGoldSold(numTickets);
                 }
-            } else if (ticket.equals("Silver")) {
+            } else if (ticket.equalsIgnoreCase("silver")) {
                 if(events.get(i).getArena().getSilverPct()<numTickets){
                     System.out.println("No more SILVER tickets at Arena(2)");
                 }else {
@@ -358,7 +466,7 @@ public class RunTicket {
                     events.get(i).getArena().subSilverPct(numTickets);
                     events.get(i).getArena().totalSeatsSilverSold(numTickets);
                 }
-            } else if (ticket.equals("Bronze")) {
+            } else if (ticket.equalsIgnoreCase("bronze")) {
                 if(events.get(i).getArena().getBronzePct()<numTickets){
                     System.out.println("No more BRONZE tickets at Arena(2)");
                 }else {
@@ -367,7 +475,7 @@ public class RunTicket {
                     events.get(i).getArena().subBronzePct(numTickets);
                     events.get(i).getArena().totalSeatsBronzeSold(numTickets);
                 }
-            } else if (ticket.equals("General") || ticket.equals("General Admission")) {
+            } else if (ticket.equalsIgnoreCase("general") || ticket.equalsIgnoreCase("general admission")) {
                 if(events.get(i).getArena().getGeneralPct()<numTickets){
                     System.out.println("No more GENERAL tickets at Arena(2)");
                 }else {
@@ -380,7 +488,7 @@ public class RunTicket {
                 System.out.println("ERROR!");
             }
         } else if (events.get(i).getVenueType().equals("Auditorium")) {
-            if (ticket.equals("VIP")|| ticket.equals("Vip")) {
+            if (ticket.equalsIgnoreCase("vip")) {
                 if(events.get(i).getAuditorium().getVipPct()<numTickets){
                     System.out.println("No more VIP tickets at Auditorium(2)");
                 }else {
@@ -389,7 +497,7 @@ public class RunTicket {
                     events.get(i).getAuditorium().subVipPct(numTickets);
                     events.get(i).getAuditorium().totalSeatsVipSold(numTickets);
                 }
-            } else if (ticket.equals("Gold")) {
+            } else if (ticket.equalsIgnoreCase("gold")) {
                 if(events.get(i).getAuditorium().getGoldPct()<numTickets){
                     System.out.println("No more GOLD tickets at Auditorium(2)");
                 }else {
@@ -398,7 +506,7 @@ public class RunTicket {
                     events.get(i).getAuditorium().subGoldPct(numTickets);
                     events.get(i).getAuditorium().totalSeatsGoldSold(numTickets);
                 }
-            } else if (ticket.equals("Silver")) {
+            } else if (ticket.equalsIgnoreCase("silver")) {
                 if(events.get(i).getAuditorium().getSilverPct()<numTickets){
                     System.out.println("No more SILVER tickets at Auditorium(2)");
                 }else {
@@ -407,7 +515,7 @@ public class RunTicket {
                     events.get(i).getAuditorium().subSilverPct(numTickets);
                     events.get(i).getAuditorium().totalSeatsSilverSold(numTickets);
                 }
-            } else if (ticket.equals("Bronze")) {
+            } else if (ticket.equalsIgnoreCase("bronze")) {
                 if(events.get(i).getAuditorium().getBronzePct()<numTickets){
                     System.out.println("No more BRONZE tickets at Auditorium(2)");
                 }else {
@@ -416,7 +524,7 @@ public class RunTicket {
                     events.get(i).getAuditorium().subBronzePct(numTickets);
                     events.get(i).getAuditorium().totalSeatsBronzeSold(numTickets);
                 }
-            } else if (ticket.equals("General") || ticket.equals("General Admission")) {
+            } else if (ticket.equalsIgnoreCase("general") || ticket.equalsIgnoreCase("general admission")) {
                 if(events.get(i).getAuditorium().getGeneralPct()<numTickets){
                     System.out.println("No more GENERAL tickets at Auditorium(2)");
                 }else {
@@ -429,7 +537,7 @@ public class RunTicket {
                 System.out.println("ERROR!");
             }
         } else if (events.get(i).getVenueType().equals("Open Air")) {
-            if (ticket.equals("VIP")|| ticket.equals("Vip")) {
+            if (ticket.equalsIgnoreCase("Vip")) {
                 if(events.get(i).getOpenAir().getVipPct()<numTickets){
                     System.out.println("No more VIP tickets at Open Air(2)");
                 }else {
@@ -438,7 +546,7 @@ public class RunTicket {
                     events.get(i).getOpenAir().subVipPct(numTickets);
                     events.get(i).getOpenAir().totalSeatsVipSold(numTickets);
                 }
-            } else if (ticket.equals("Gold")) {
+            } else if (ticket.equalsIgnoreCase("gold")) {
                 if(events.get(i).getOpenAir().getGoldPct()<numTickets){
                     System.out.println("No more GOLD tickets at Open Air(2)");
                 }else {
@@ -447,7 +555,7 @@ public class RunTicket {
                     events.get(i).getOpenAir().subGoldPct(numTickets);
                     events.get(i).getOpenAir().totalSeatsGoldSold(numTickets);
                 }
-            } else if (ticket.equals("Silver")) {
+            } else if (ticket.equalsIgnoreCase("silver")) {
                 if(events.get(i).getOpenAir().getSilverPct()<numTickets){
                     System.out.println("No more SILVER tickets at Open Air(2)");
                 }else {
@@ -456,7 +564,7 @@ public class RunTicket {
                     events.get(i).getOpenAir().subSilverPct(numTickets);
                     events.get(i).getOpenAir().totalSeatsSilverSold(numTickets);
                 }
-            } else if (ticket.equals("Bronze")) {
+            } else if (ticket.equalsIgnoreCase("bronze")) {
                 if(events.get(i).getOpenAir().getBronzePct()<numTickets){
                     System.out.println("No more BRONZE tickets at Open Air(2)");
                 }else {
@@ -465,7 +573,7 @@ public class RunTicket {
                     events.get(i).getOpenAir().subBronzePct(numTickets);
                     events.get(i).getOpenAir().totalSeatsBronzeSold(numTickets);
                 }
-            } else if (ticket.equals("General") || ticket.equals("General Admission")) {
+            } else if (ticket.equalsIgnoreCase("general") || ticket.equalsIgnoreCase("general admission")) {
                 if(events.get(i).getOpenAir().getGeneralPct()<numTickets){
                     System.out.println("No more GENERAL tickets at Open Air(2)");
                 }else {
@@ -492,7 +600,7 @@ public class RunTicket {
      */
     public static void totalTicketsSpecial(int i,String ticket, int numTickets, ArrayList<Event> events) {
         if(events.get(i).getVenueType().equals("Open Air")){
-            if (ticket.equals("VIP")|| ticket.equals("Vip")) {
+            if (ticket.equalsIgnoreCase("vip")) {
                 if(events.get(i).getOpenAir().getVipPct()<numTickets){
                     System.out.println("No more VIP tickets at Open Air(3)");
                 }else {
@@ -501,7 +609,7 @@ public class RunTicket {
                     events.get(i).getOpenAir().subVipPct(numTickets);
                     events.get(i).getOpenAir().totalSeatsVipSold(numTickets);
                 }
-            } else if (ticket.equals("Gold")) {
+            } else if (ticket.equalsIgnoreCase("gold")) {
                 if(events.get(i).getOpenAir().getGoldPct()<numTickets){
                     System.out.println("No more GOLD tickets at Open Air(3)");
                 }else {
@@ -510,7 +618,7 @@ public class RunTicket {
                     events.get(i).getOpenAir().subGoldPct(numTickets);
                     events.get(i).getOpenAir().totalSeatsGoldSold(numTickets);
                 }
-            } else if (ticket.equals("Silver")) {
+            } else if (ticket.equalsIgnoreCase("silver")) {
                 if(events.get(i).getOpenAir().getSilverPct()<numTickets){
                     System.out.println("No more SILVER tickets at Open Air(3)");
                 }else {
@@ -519,7 +627,7 @@ public class RunTicket {
                     events.get(i).getOpenAir().subSilverPct(numTickets);
                     events.get(i).getOpenAir().totalSeatsSilverSold(numTickets);
                 }
-            } else if (ticket.equals("Bronze")) {
+            } else if (ticket.equalsIgnoreCase("bronze")) {
                 if(events.get(i).getOpenAir().getBronzePct()<numTickets){
                     System.out.println("No more BRONZE tickets at Open Air(3)");
                 }else {
@@ -528,7 +636,7 @@ public class RunTicket {
                     events.get(i).getOpenAir().subBronzePct(numTickets);
                     events.get(i).getOpenAir().totalSeatsBronzeSold(numTickets);
                 }
-            } else if (ticket.equals("General")|| ticket.equals("General Admission")) {
+            } else if (ticket.equalsIgnoreCase("general")|| ticket.equals("general admission")) {
                 if(events.get(i).getOpenAir().getGeneralPct()<numTickets){
                     System.out.println("No more GENERAL tickets at Open Air(3)");
                 }else {
@@ -541,7 +649,7 @@ public class RunTicket {
                 System.out.println("ERROR en totalTicketSpecial()");
             }
         }else if(events.get(i).getVenueType().equals("Arena")){
-            if(ticket.equals("VIP")|| ticket.equals("Vip")) {
+            if(ticket.equalsIgnoreCase("vip")) {
                 if(events.get(i).getArena().getVipPct()<numTickets){
                     System.out.println("No more VIP ticket at Arena(3)");
                 }else {
@@ -550,7 +658,7 @@ public class RunTicket {
                     events.get(i).getArena().subVipPct(numTickets);
                     events.get(i).getArena().totalSeatsVipSold(numTickets);
                 }
-            } else if (ticket.equals("Gold")) {
+            } else if (ticket.equalsIgnoreCase("gold")) {
                 if(events.get(i).getArena().getGoldPct()<numTickets){
                     System.out.println("No more GOLD ticket at Arena(3)");
                 }else {
@@ -559,7 +667,7 @@ public class RunTicket {
                     events.get(i).getArena().subGoldPct(numTickets);
                     events.get(i).getArena().totalSeatsGoldSold(numTickets);
                 }
-            } else if (ticket.equals("Silver")) {
+            } else if (ticket.equalsIgnoreCase("silver")) {
                 if(events.get(i).getArena().getSilverPct()<numTickets){
                     System.out.println("No more SILVER ticket at Arena(3)");
                 }else {
@@ -568,7 +676,7 @@ public class RunTicket {
                     events.get(i).getArena().subSilverPct(numTickets);
                     events.get(i).getArena().totalSeatsSilverSold(numTickets);
                 }
-            } else if (ticket.equals("Bronze")) {
+            } else if (ticket.equalsIgnoreCase("bronze")) {
                 if(events.get(i).getArena().getBronzePct()<numTickets){
                     System.out.println("No more BRONZE ticket at Arena(3)");
                 }else {
@@ -577,7 +685,7 @@ public class RunTicket {
                     events.get(i).getArena().subBronzePct(numTickets);
                     events.get(i).getArena().totalSeatsBronzeSold(numTickets);
                 }
-            } else if (ticket.equals("General") || ticket.equals("General Admission")) {
+            } else if (ticket.equalsIgnoreCase("general") || ticket.equalsIgnoreCase("general admission")) {
                 if(events.get(i).getArena().getGeneralPct()<numTickets){
                     System.out.println("No more GENERAL ticket at Arena(3)");
                 }else {
@@ -588,6 +696,104 @@ public class RunTicket {
                 }
             } else {
                 System.out.println("ERROR en totalTicketSpecial()");
+            }
+        }else if(events.get(i).getVenueType().equals("Auditorium")){
+            if (ticket.equalsIgnoreCase("vip")) {
+                if(events.get(i).getAuditorium().getVipPct()<numTickets){
+                    System.out.println("No more VIP tickets at Auditorium(3)");
+                }else {
+                    double total = events.get(i).getVipPrice();
+                    events.get(i).getAuditorium().totalVipRevenue(numTickets, total);
+                    events.get(i).getAuditorium().subVipPct(numTickets);
+                    events.get(i).getAuditorium().totalSeatsVipSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("gold")) {
+                if(events.get(i).getAuditorium().getGoldPct()<numTickets){
+                    System.out.println("No more GOLD tickets at Auditorium(3)");
+                }else {
+                    double total = events.get(i).getGoldPrice();
+                    events.get(i).getAuditorium().totalGoldRevenue(numTickets, total);
+                    events.get(i).getAuditorium().subGoldPct(numTickets);
+                    events.get(i).getAuditorium().totalSeatsGoldSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("silver")) {
+                if(events.get(i).getAuditorium().getSilverPct()<numTickets){
+                    System.out.println("No more SILVER tickets at Auditorium(3)");
+                }else {
+                    double total = events.get(i).getSilverPrice();
+                    events.get(i).getAuditorium().totalSilverRevenue(numTickets, total);
+                    events.get(i).getAuditorium().subSilverPct(numTickets);
+                    events.get(i).getAuditorium().totalSeatsSilverSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("bronze")) {
+                if(events.get(i).getAuditorium().getBronzePct()<numTickets){
+                    System.out.println("No more BRONZE tickets at Auditorium(3)");
+                }else {
+                    double total = events.get(i).getBronzePrice();
+                    events.get(i).getAuditorium().totalBronzeRevenue(numTickets, total);
+                    events.get(i).getAuditorium().subBronzePct(numTickets);
+                    events.get(i).getAuditorium().totalSeatsBronzeSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("general") || ticket.equalsIgnoreCase("general admission")) {
+                if(events.get(i).getAuditorium().getGeneralPct()<numTickets){
+                    System.out.println("No more GENERAL tickets at Auditorium(3)");
+                }else {
+                    double total = events.get(i).getGeneralPrice();
+                    events.get(i).getAuditorium().totalGeneralRevenue(numTickets, total);
+                    events.get(i).getAuditorium().subGeneralPct(numTickets);
+                    events.get(i).getAuditorium().totalSeatsGeneralSold(numTickets);
+                }
+            }else{
+                System.out.println("ERROR");
+            }
+        }else if(events.get(i).getVenueType().equals("Stadium")){
+            if (ticket.equalsIgnoreCase("vip")) {
+                if(events.get(i).getStadium().getVipPct()<numTickets){
+                    System.out.println("No more VIP tickets at Stadium(3)"); //(2) es para decir que esto es de concert.
+                }else {
+                    double total = events.get(i).getVipPrice();
+                    events.get(i).getStadium().totalVipRevenue(numTickets, total);
+                    events.get(i).getStadium().subVipPct(numTickets);
+                    events.get(i).getStadium().totalSeatsVipSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("gold")) {
+                if(events.get(i).getStadium().getGoldPct()<numTickets){
+                    System.out.println("No more GOLD tickets at Stadium(3)");
+                }else {
+                    double total = events.get(i).getGoldPrice();
+                    events.get(i).getStadium().totalGoldRevenue(numTickets, total); /////////////////////////////////
+                    events.get(i).getStadium().subGoldPct(numTickets);
+                    events.get(i).getStadium().totalSeatsGoldSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("silver")) {
+                if(events.get(i).getStadium().getSilverPct()<numTickets){
+                    System.out.println("No more SILVER tickets at Stadium(3)");
+                }else {
+                    double total = events.get(i).getSilverPrice();
+                    events.get(i).getStadium().totalSilverRevenue(numTickets, total);
+                    events.get(i).getStadium().subSilverPct(numTickets);
+                    events.get(i).getStadium().totalSeatsSilverSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("bronze")) {
+                if(events.get(i).getStadium().getBronzePct()<numTickets){
+                    System.out.println("No more BRONZE tickets at Stadium(3)");
+                }else {
+                    double total = events.get(i).getBronzePrice();
+                    events.get(i).getStadium().totalBronzeRevenue(numTickets, total);
+                    events.get(i).getStadium().subBronzePct(numTickets);
+                    events.get(i).getStadium().totalSeatsBronzeSold(numTickets);
+                }
+            } else if (ticket.equalsIgnoreCase("general") || ticket.equalsIgnoreCase("general admission")) {
+                if(events.get(i).getStadium().getGeneralPct()<numTickets){
+                    System.out.println("No more GENERAL tickets at Stadium(3)");
+                }else {
+                    double total = events.get(i).getGeneralPrice();
+                    events.get(i).getStadium().totalGeneralRevenue(numTickets, total);
+                    events.get(i).getStadium().subGeneralPct(numTickets);
+                    events.get(i).getStadium().totalSeatsGeneralSold(numTickets);
+                }
+            }else{
+                System.out.println("ERROR!");
             }
         }else{
             System.out.println("ERROR EN LINEA 692");
@@ -604,19 +810,19 @@ public class RunTicket {
      * @return total amount to pay without taxes.
      */
     public static double totalAmountSport(int i, String ticket, int numTickets, ArrayList<Event> events) {
-        if (ticket.equals("VIP")|| ticket.equals("Vip")) {
+        if (ticket.equalsIgnoreCase("vip")) {
             events.get(i).totalSumVip(numTickets);
             return events.get(i).getVipPrice() * numTickets;
-        } else if (ticket.equals("Gold")) {
+        } else if (ticket.equalsIgnoreCase("gold")) {
             events.get(i).totalSumGold(numTickets);
             return events.get(i).getGoldPrice() * numTickets;
-        } else if (ticket.equals("Silver")) {
+        } else if (ticket.equalsIgnoreCase("silver")) {
             events.get(i).totalSumSilver(numTickets);
             return events.get(i).getSilverPrice() * numTickets;
-        } else if (ticket.equals("Bronze")) {
+        } else if (ticket.equalsIgnoreCase("bronze")) {
             events.get(i).totalSumBronze(numTickets);
             return events.get(i).getBronzePrice() * numTickets;
-        } else if (ticket.equals("General") || ticket.equals("General Admission")) {
+        } else if (ticket.equalsIgnoreCase("general") || ticket.equalsIgnoreCase("general admission")) {
             events.get(i).totalSumGeneral(numTickets);
             return events.get(i).getGeneralPrice() * numTickets;
         }
@@ -633,19 +839,19 @@ public class RunTicket {
      * @return total amount to pay without taxes.
      */
     public static double totalAmountConcert(int i, String ticket, int numTickets, ArrayList<Event> events) {
-        if (ticket.equals("VIP")|| ticket.equals("Vip")) {
+        if (ticket.equalsIgnoreCase("vip")) {
             events.get(i).totalSumVip(numTickets);
             return events.get(i).getVipPrice() * numTickets;
-        } else if (ticket.equals("Gold")) {
+        } else if (ticket.equalsIgnoreCase("gold")) {
             events.get(i).totalSumGold(numTickets);
             return events.get(i).getGoldPrice() * numTickets;
-        } else if (ticket.equals("Silver")) {
+        } else if (ticket.equalsIgnoreCase("silver")) {
             events.get(i).totalSumSilver(numTickets);
             return events.get(i).getSilverPrice() * numTickets;
-        } else if (ticket.equals("Bronze")) {
+        } else if (ticket.equalsIgnoreCase("bronze")) {
             events.get(i).totalSumBronze(numTickets);
             return events.get(i).getBronzePrice() * numTickets;
-        } else if (ticket.equals("General") || ticket.equals("General Admission")) {
+        } else if (ticket.equalsIgnoreCase("general") || ticket.equalsIgnoreCase("general admission")) {
             events.get(i).totalSumGeneral(numTickets);
             return events.get(i).getGeneralPrice() * numTickets;
         }
@@ -662,19 +868,19 @@ public class RunTicket {
      * @return total amount to pay without taxes.
      */
     public static double totalAmountSpecial(int i, String ticket, int numTickets, ArrayList<Event> events) {
-        if (ticket.equals("VIP")|| ticket.equals("Vip")) {
+        if (ticket.equalsIgnoreCase("vip")) {
             events.get(i).totalSumVip(numTickets);
             return events.get(i).getVipPrice() * numTickets;
-        } else if (ticket.equals("Gold")) {
+        } else if (ticket.equalsIgnoreCase("gold")) {
             events.get(i).totalSumGold(numTickets);
             return events.get(i).getGoldPrice() * numTickets;
-        } else if (ticket.equals("Silver")) {
+        } else if (ticket.equalsIgnoreCase("silver")) {
             events.get(i).totalSumSilver(numTickets);
             return events.get(i).getSilverPrice() * numTickets;
-        } else if (ticket.equals("Bronze")) {
+        } else if (ticket.equalsIgnoreCase("bronze")) {
             events.get(i).totalSumBronze(numTickets);
             return events.get(i).getBronzePrice() * numTickets;
-        } else if (ticket.equals("General") || ticket.equals("General Admission")) {
+        } else if (ticket.equalsIgnoreCase("general") || ticket.equalsIgnoreCase("general admission")) {
             events.get(i).totalSumGeneral(numTickets);
             return events.get(i).getGeneralPrice() * numTickets;
         }
@@ -723,6 +929,15 @@ public class RunTicket {
             } else if(user == 3) {
                 doAutoPurchase(customerRepository,autoPurchases,events);
                 printLog("Auto purchase is executing...loading...");
+            }else if(user == 4){
+                System.out.println("Thank you for your time.");
+                try {
+                    generateCsvCustomer(customerRepository);
+                    generateCsvEvent(events);
+                } catch (IOException e) {
+                    System.out.println("The file was not found please ensure file exist");
+                }
+                System.exit(0);
             }
         }catch(IOException exception){
             System.out.println("There was an error.");
@@ -875,23 +1090,29 @@ public class RunTicket {
         printLog("User has initialize a process.");
 
         System.out.println("Are you an individual user? y/n");
-        char user = kb.nextLine().charAt(0);
+        String user = kb.nextLine();
 
         boolean sentinel = false;
         while (!sentinel) {
-            if (user == 'y') {
+            if (user.equalsIgnoreCase("y")||user.equalsIgnoreCase("yes")) {
                 printLog("Single user is creating an order.");
                 individualOrder(customerRepository, events);
                 printLog("Single customer in the system.");
                 sentinel = true;
-            } else if (user == 'n') {
+            } else if (user.equalsIgnoreCase("n")||user.equals("no")) {
                 printLog("Multiple user are creating orders.");
                 multipleOrders(customerRepository, events);
                 printLog("Multiple customers in the system.");
                 sentinel = true;
-            } else {
-                System.out.println("Something went wrong. Please try again:");
-                user = kb.nextLine().charAt(0);
+            }
+            else {
+                System.out.println("Invalid entry. Please try again:");
+                System.out.println("To return to Main menu enter Main Menu");
+                user =kb.nextLine();
+                if(user.equalsIgnoreCase("main menu")){
+                    startMenu();
+                }
+
             }
         }
     } //NUEVO
@@ -1002,29 +1223,38 @@ public class RunTicket {
      *
      * **/
     public static int checkInvalidInput() {
-        Scanner kb = new Scanner(System.in);
+        // Customer Repository has customer information which will be used within this method
+        // To return to this option if user decides to.
+        CustomerRepository customerRepository = generateCustomerRepository();
+        ArrayList<Event> eventList = generateEventList();
+        String message = "";
+        HandleIdException idObject = new HandleIdException(message);
+        int count = 3;
         int id = 0;
-        System.out.println("Please enter the ID event you are interested:");
-        while (true) {//Always receive user input
+        Scanner scr = new Scanner(System.in);
+        while (count != 0) {
             try {
-                String temp = kb.nextLine();
-                boolean flag = temp.matches("[0-71]+");
-
-                if (flag) {
-                    id = Integer.parseInt(temp);
-                    return id;
-                }else {//If the match is not successful, it goes to the next loop
-                    System.out.println("The values entered do not match");
-
+                System.out.println("Enter Event Id");
+                System.out.println("Enter 0 to return to Main Menu");
+                id = scr.nextInt();
+                if (id == 0) {
+                    startMenu();
                 }
-
-            } catch (InputMismatchException e) {
-                System.out.println("The values entered do not match");
-                kb.next();
+                int x = idObject.eventId(id);
+                return id;
+            } catch (HandleIdException e) {
+                System.out.println(e);
+            } catch (InputMismatchException e){
+               System.out.println("Expecting Integer value try again");
+               scr.next();
             }
-
-        }
-
+            if (count == 0) {
+                System.out.println("You have exceeded invalid inputs returning to log in menu.....");
+                individualOrder(customerRepository, eventList);
+            }
+            count--;
+            }
+        return checkInvalidInput();
     }
     /**
      * Method provided by Victor Herrera
@@ -1033,23 +1263,39 @@ public class RunTicket {
      *
      * **/
     public static boolean verifyTicketType(String ticketType){
+        if(ticketType.equalsIgnoreCase("vip")){
+            return true;
+        }
+        else if(ticketType.equalsIgnoreCase("gold")){
+            return true;
+        }
+        else if(ticketType.equalsIgnoreCase("silver")){
+            return true;
+        }
+        else if(ticketType.equalsIgnoreCase("bronze")){
+            return true;
+        }
+        else if(ticketType.equalsIgnoreCase("general")){
+            return true;
+        }
+        return false;
+    }
+    /**
+     * method provided Victor herrera
+     *
+     *
+     * **/
+    public static boolean verifyEventType(String eventName){
+        if(eventName.equalsIgnoreCase("Sport")){
+            return true;
+        }
+        else if(eventName.equalsIgnoreCase("Concert")){
+            return true;
+        }
+        else if(eventName.equalsIgnoreCase("special")){
+            return true;
+        }
 
-        if(ticketType.equals("Vip")||ticketType.equals("VIP")){
-            return true;
-        }
-        else if(ticketType.equals("Gold")||ticketType.equals("gold")){
-            return true;
-        }
-        else if(ticketType.equals("Silver")||ticketType.equals("silver")){
-            return true;
-        }
-        else if(ticketType.equals("Bronze")||ticketType.equals("bronze")){
-
-            return true;
-        }
-        else if(ticketType.equals("General")||ticketType.equals("general")){
-            return true;
-        }
         return false;
     }
     /**
@@ -1059,22 +1305,34 @@ public class RunTicket {
      * that a user can purchase.
      * **/
     public static int checkNumberOfTickets() {
-
+        ArrayList<Event> event = generateEventList();
+        CustomerRepository customerRepository = generateCustomerRepository();
+        StringRepo input = new StringRepo();
+        StringRepo input1= new StringRepo();
+        input1.messageInfo();
+        Singleton instance1 = Singleton.getInstance();
         Scanner kb = new Scanner(System.in);
-        System.out.println("Please enter the number of tickets you want:");
+        instance1.printMessage(input.messageInfo());
+        instance1.printMessage(input1.menuMessage());
+        instance1.printMessage(input1.startMenuMessage());
+        int numTicket = 0;
         try {
-            int numTicket = 0;
             numTicket = kb.nextInt();
-            if (numTicket < 2 || numTicket > 6) {
+            if (numTicket < 2 || numTicket > 8) {
                 System.out.println("you can only purchase 2-6 Tickets try again");
                 return checkNumberOfTickets();
-            }else if(numTicket>=2||numTicket<=6){
+            }else if(numTicket==7){
+                individualOrder(customerRepository,event);
+            }else if(numTicket==8){
+                System.out.println("Returning to Main Menu....................");
+                startMenu();
+            }
+            else if(numTicket>=2||numTicket<=6){
                 return numTicket;
             }
         }catch (InputMismatchException e){
-            System.out.println("Expecting Integer value detected Invalid input try again");
+            instance1.printMessage(input.messageError());
         }
-
         return checkNumberOfTickets();
     }
 
@@ -1087,160 +1345,26 @@ public class RunTicket {
      * Modifications will check to ensure first,last,username,password match correct individual.
      */
     public static void individualOrder(CustomerRepository customerRepository, ArrayList<Event> events)  {
-    try {
-        Scanner kb = new Scanner(System.in);
-
-        Ticket ticket;//Create a ticket for the order
-
-        System.out.println("Individual user! Got it!");
-        System.out.println("Please enter your first name:");
-
-
-        // while loop checks user input to ensure first name is correct
-        // countFirst will keep track amount of times input is correct the return to main menu.
-        //
-        int countFirst = 0;
-        String firstName = kb.nextLine();
-        while (!(firstNameCheck(firstName, customerRepository))) {
-            if (!(firstNameCheck(firstName, customerRepository))) {
-                System.out.println("The First Name is not in System.");
-                System.out.println("Enter Main Menu to return to Main Menu");
-            }
-            firstName = kb.nextLine();
-            if (firstName.toLowerCase().equals("main menu")) {
-                System.out.println("Returning to Main Menu.......");
-                startMenu();
-            }
-            countFirst++;
-            if (countFirst == 4) {
-                System.out.println("You have reached maximum attempts returning to main Menu......");
-                startMenu();
-            }
-
-        }
-        int countLast = 0;
-        System.out.println("Please enter your last name:");
-        String lastName = kb.nextLine();
-        while (!(lastNameCheck(firstName, lastName, customerRepository))) {
-            if (!(lastNameCheck(firstName, lastName, customerRepository))) {
-                System.out.println("The Last Name is not in the system or  does not match first name try again");
-                System.out.println("Enter Main Menu to return to Main Menu");
-
-            }
-            lastName = kb.nextLine();
-            if (lastName.toLowerCase().equals("main menu")) {
-                System.out.println("Returning to Main Menu.......");
-                startMenu();
-            }
-            countLast++;
-            if (countLast == 4) {
-                System.out.println("You have reached maximum attempts returning to main Menu......");
-                startMenu();
-            }
-
-        }
-        int countUserName = 0;
-        System.out.println("Please enter user name:");
-        String userName = kb.nextLine();
-
-        while (!(userNameCheck(firstName, lastName, userName, customerRepository))) {
-            if (!(userNameCheck(firstName, lastName, userName, customerRepository))) {
-                System.out.println("Incorrect UserName or username does not match try again");
-                System.out.println("Enter Main Menu to return to Main Menu");
-            }
-            userName = kb.nextLine();
-            if (userName.toLowerCase().equals("main menu")) {
-                System.out.println("Returning to Main Menu.......");
-                startMenu();
-            }
-            countUserName++;
-            if (countUserName == 4) {
-                System.out.println("You have reached maximum attempts returning to main Menu......");
-                startMenu();
-            }
-
-        }
-
-        int countPassword = 4;
-        System.out.println("Please enter the password:");
-        String password = kb.nextLine();
-        while (!(checkUserPassword(firstName, lastName, userName, password, customerRepository))) {
-            if (!(checkUserPassword(firstName, lastName, userName, password, customerRepository))) {
-                System.out.println("What password did you say? That was a wrong password");
-                System.out.println("Try again");
-                System.out.println("You have " + (countPassword--) + " Attempts left");
-                System.out.println("Enter Main Menu to return to Main Menu");
-            }
-            password = kb.nextLine();
-            if (password.toLowerCase().equals("main menu")) {
-                System.out.println("Returning to Main Menu.......");
-                startMenu();
-            }
-
-            if (countPassword == 0) {
-                System.out.println("You have reached maximum attempts returning to main Menu......");
-                startMenu();
-            }
-
-        }
-        checkIfCustomerExists(firstName, lastName, customerRepository);
-        int customerPosition = customerRepository.getMethod().findCustomer(firstName, lastName);
-        int id = 0;
-        id = checkInvalidInput();
-
-        printUserMenu(id, events);
-        System.out.println("Select type of ticket: [Vip] [Gold] [Silver] [Bronze] [General]:");
-        String typeTicket = kb.nextLine();
-        while (!verifyTicketType(typeTicket)) {
-            System.out.println("Please Select the valid ticket type [Vip] [Gold] [Silver] [Bronze] [General]");
-            typeTicket = kb.nextLine();
-        }
-        int numTickets = 0;
-        numTickets = checkNumberOfTickets();
-
-        printLog("User ordered " + numTickets + " " + typeTicket + " ticket(s)");
-
-
-        double totalAmount = totalAmount(id, typeTicket, numTickets, events, customerRepository, customerPosition);
-        ticket = new Ticket(id, typeTicket, numTickets, totalAmount);
-        System.out.println("Purchase Complete Thank you...");
-        customerOrder(firstName, lastName, typeTicket, totalAmount, ticket, events, customerRepository);
-    }catch (IOException e){
-        System.out.println("File was not Found Please Come Back when appropriate file");
-    }
-    }
-
-    /**
-     * Method provided by Christian A. Gomez.
-     * This method will be in charge to create multiple orders.
-     * @param customerRepository An instance of all customers.
-     * @param events An ArrayList of Event.
-     * @throws IOException Throw if the there is any IOException during the process.
-     */
-    public static void multipleOrders(CustomerRepository customerRepository, ArrayList<Event> events){
         try {
-        Scanner kb = new Scanner(System.in);
-        Ticket ticket;
-        System.out.println("Multiple users! Please enter the total number of users:");
-        int numUsers =0;
+            Scanner kb = new Scanner(System.in);
+            Ticket ticket;//Create a ticket for the order
+            System.out.println("Individual user! Got it!");
+            System.out.println("To Log in enter the following credentials");
+            System.out.println("Please enter your first name:");
 
-        numUsers = kb.nextInt();
-        kb.nextLine();
 
-        printLog("A total of " + numUsers + " will use the system.");
-        int counter =1;
-        while (counter <= numUsers) {
-            System.out.println("Enter First Name");
+            // while loop checks user input to ensure first name is correct
+            // countFirst will keep track amount of times input is correct the return to main menu.
+            //
             int countFirst = 0;
-
             String firstName = kb.nextLine();
             while (!(firstNameCheck(firstName, customerRepository))) {
                 if (!(firstNameCheck(firstName, customerRepository))) {
                     System.out.println("The First Name is not in System.");
-                    System.out.println("Enter Main Menu to return to Main Menu");
+                    System.out.println("To return to previous menu enter Main Menu");
                 }
                 firstName = kb.nextLine();
-                if (firstName.toLowerCase().equals("main menu")) {
+                if (firstName.equalsIgnoreCase("main menu")) {
                     System.out.println("Returning to Main Menu.......");
                     startMenu();
                 }
@@ -1257,7 +1381,7 @@ public class RunTicket {
             while (!(lastNameCheck(firstName, lastName, customerRepository))) {
                 if (!(lastNameCheck(firstName, lastName, customerRepository))) {
                     System.out.println("The Last Name is not in the system or  does not match first name try again");
-                    System.out.println("Enter Main Menu to return to Main Menu");
+                    System.out.println("To return to previous menu enter Main Menu");
 
                 }
                 lastName = kb.nextLine();
@@ -1279,7 +1403,7 @@ public class RunTicket {
             while (!(userNameCheck(firstName, lastName, userName, customerRepository))) {
                 if (!(userNameCheck(firstName, lastName, userName, customerRepository))) {
                     System.out.println("Incorrect UserName or username does not match try again");
-                    System.out.println("Enter Main Menu to return to Main Menu");
+                    System.out.println("To return to previous menu enter Main Menu");
                 }
                 userName = kb.nextLine();
                 if (userName.toLowerCase().equals("main menu")) {
@@ -1302,10 +1426,10 @@ public class RunTicket {
                     System.out.println("What password did you say? That was a wrong password");
                     System.out.println("Try again");
                     System.out.println("You have " + (countPassword--) + " Attempts left");
-                    System.out.println("Enter Main Menu to return to Main Menu");
+                    System.out.println("To return to previous menu enter Main Menu");
                 }
                 password = kb.nextLine();
-                if (password.toLowerCase().equals("main menu")) {
+                if (password.equalsIgnoreCase("main menu")) {
                     System.out.println("Returning to Main Menu.......");
                     startMenu();
                 }
@@ -1316,44 +1440,181 @@ public class RunTicket {
                 }
 
             }
-
             checkIfCustomerExists(firstName, lastName, customerRepository);
             int customerPosition = customerRepository.getMethod().findCustomer(firstName, lastName);
 
-
-            int id = 0;
-            id = checkInvalidInput();
+            int id = checkInvalidInput();
             printUserMenu(id, events);
+
             System.out.println("Select type of ticket: [Vip] [Gold] [Silver] [Bronze] [General]:");
             String typeTicket = kb.nextLine();
-
             while (!verifyTicketType(typeTicket)) {
                 System.out.println("Please Select the valid ticket type [Vip] [Gold] [Silver] [Bronze] [General]");
+                System.out.println("To return to previos Menu please type previous");
                 typeTicket = kb.nextLine();
-            }
 
+                if(typeTicket.equalsIgnoreCase("previous")){
+                    individualOrder(customerRepository,events);
+                }
+            }
             int numTickets = 0;
             numTickets = checkNumberOfTickets();
 
-            System.out.println("Purchase complete for "+firstName+" " +lastName);
-
             printLog("User ordered " + numTickets + " " + typeTicket + " ticket(s)");
+
+
             double totalAmount = totalAmount(id, typeTicket, numTickets, events, customerRepository, customerPosition);
             ticket = new Ticket(id, typeTicket, numTickets, totalAmount);
+            System.out.println("Purchase Complete Thank you...");
             customerOrder(firstName, lastName, typeTicket, totalAmount, ticket, events, customerRepository);
-            if(counter<numUsers) {
-                System.out.println("Please enter  Next Customer Information");
-            }
-            else {
-                System.out.println("All purchases complete thank you...");
-            }
-            counter++;
+        }catch (IOException e){
+            System.out.println("File was not Found Please Come Back when appropriate file");
         }
+    }
+
+    /**
+     * Method provided by Christian A. Gomez.
+     * This method will be in charge to create multiple orders.
+     * @param customerRepository An instance of all customers.
+     * @param events An ArrayList of Event.
+     * @throws IOException Throw if the there is any IOException during the process.
+     */
+    public static void multipleOrders(CustomerRepository customerRepository, ArrayList<Event> events){
+        try {
+            Scanner kb = new Scanner(System.in);
+            Ticket ticket;
+            System.out.println("Multiple users! Please enter the total number of users:");
+            int numUsers =0;
+
+            numUsers = kb.nextInt();
+            kb.nextLine();
+
+            printLog("A total of " + numUsers + " will use the system.");
+            int counter =1;
+            while (counter <= numUsers) {
+                System.out.println("Enter First Name");
+                int countFirst = 0;
+
+                String firstName = kb.nextLine();
+                while (!(firstNameCheck(firstName, customerRepository))) {
+                    if (!(firstNameCheck(firstName, customerRepository))) {
+                        System.out.println("The First Name is not in System.");
+                        System.out.println("To return to previous menu enter Main Menu");
+                    }
+                    firstName = kb.nextLine();
+                    if (firstName.toLowerCase().equals("main menu")) {
+                        System.out.println("Returning to Main Menu.......");
+                        startMenu();
+                    }
+                    countFirst++;
+                    if (countFirst == 4) {
+                        System.out.println("You have reached maximum attempts returning to main Menu......");
+                        startMenu();
+                    }
+
+                }
+                int countLast = 0;
+                System.out.println("Please enter your last name:");
+                String lastName = kb.nextLine();
+                while (!(lastNameCheck(firstName, lastName, customerRepository))) {
+                    if (!(lastNameCheck(firstName, lastName, customerRepository))) {
+                        System.out.println("The Last Name is not in the system or  does not match first name try again");
+                        System.out.println("To return to previous menu enter Main Menu");
+
+                    }
+                    lastName = kb.nextLine();
+                    if (lastName.toLowerCase().equals("main menu")) {
+                        System.out.println("Returning to Main Menu.......");
+                        startMenu();
+                    }
+                    countLast++;
+                    if (countLast == 4) {
+                        System.out.println("You have reached maximum attempts returning to main Menu......");
+                        startMenu();
+                    }
+
+                }
+                int countUserName = 0;
+                System.out.println("Please enter user name:");
+                String userName = kb.nextLine();
+
+                while (!(userNameCheck(firstName, lastName, userName, customerRepository))) {
+                    if (!(userNameCheck(firstName, lastName, userName, customerRepository))) {
+                        System.out.println("Incorrect UserName or username does not match try again");
+                        System.out.println("To return to previous menu enter Main Menu");
+                    }
+                    userName = kb.nextLine();
+                    if (userName.toLowerCase().equals("main menu")) {
+                        System.out.println("Returning to Main Menu.......");
+                        startMenu();
+                    }
+                    countUserName++;
+                    if (countUserName == 4) {
+                        System.out.println("You have reached maximum attempts returning to main Menu......");
+                        startMenu();
+                    }
+
+                }
+
+                int countPassword = 4;
+                System.out.println("Please enter the password:");
+                String password = kb.nextLine();
+                while (!(checkUserPassword(firstName, lastName, userName, password, customerRepository))) {
+                    if (!(checkUserPassword(firstName, lastName, userName, password, customerRepository))) {
+                        System.out.println("What password did you say? That was a wrong password");
+                        System.out.println("Try again");
+                        System.out.println("You have " + (countPassword--) + " Attempts left");
+                        System.out.println("To return to previous menu enter Main Menu");
+                    }
+                    password = kb.nextLine();
+                    if (password.toLowerCase().equals("main menu")) {
+                        System.out.println("Returning to Main Menu.......");
+                        startMenu();
+                    }
+
+                    if (countPassword == 0) {
+                        System.out.println("You have reached maximum attempts returning to main Menu......");
+                        startMenu();
+                    }
+
+                }
+
+                checkIfCustomerExists(firstName, lastName, customerRepository);
+                int customerPosition = customerRepository.getMethod().findCustomer(firstName, lastName);
+
+                int id = checkInvalidInput();
+                printUserMenu(id, events);
+
+                System.out.println("Select type of ticket: [Vip] [Gold] [Silver] [Bronze] [General]:");
+                String typeTicket = kb.nextLine();
+
+                while (!verifyTicketType(typeTicket)) {
+                    System.out.println("Please Select the valid ticket type [Vip] [Gold] [Silver] [Bronze] [General]");
+                    typeTicket = kb.nextLine();
+                }
+
+                int numTickets = 0;
+                numTickets = checkNumberOfTickets();
+
+                System.out.println("Purchase complete for "+firstName+" " +lastName);
+
+                printLog("User ordered " + numTickets + " " + typeTicket + " ticket(s)");
+                double totalAmount = totalAmount(id, typeTicket, numTickets, events, customerRepository, customerPosition);
+                ticket = new Ticket(id, typeTicket, numTickets, totalAmount);
+                customerOrder(firstName, lastName, typeTicket, totalAmount, ticket, events, customerRepository);
+                if(counter<numUsers) {
+                    System.out.println("Please enter  Next Customer Information");
+                }
+                else {
+                    System.out.println("All purchases complete thank you...");
+                }
+                counter++;
+            }
 
         }catch (IOException e){
             System.out.println("File was not found ");
         }catch (InputMismatchException e){
-        System.out.println("Expecting an Integer Value Invalid Input Detected try again. ");
+            System.out.println("Expecting an Integer Value Invalid Input Detected try again. ");
         }
     }
 
@@ -1437,14 +1698,24 @@ public class RunTicket {
         printLog("User:" + name + " has a ticket now.");
     } //NUEVO
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static boolean checkEventNameCorrect (String name){
+    public static String checkEventNameCorrect (String name) throws IOException {
+        Scanner kb = new Scanner(System.in);
         ArrayList<Event> events = generateEventList();
+        CustomerRepository customerRepository = generateCustomerRepository();
+        System.out.println("Enter Name Event Name ");
+        System.out.println("To return to Admin enter A");
+        name =kb.nextLine();
         for(int i=0;i<events.size();i++){
-            if(events.get(i).getName().equals(name)){
-                return true;
+            if(name.equalsIgnoreCase(events.get(i).getName())){
+                name = events.get(i).getName();
+                System.out.println(name);
+                return name;
+            }
+            if(name.equalsIgnoreCase("a")){
+                administratorMenu(events,customerRepository);
             }
         }
-        return false;
+        return checkEventNameCorrect(name);
     }
     /**
      * Method provided by Christian A. Gomez.
@@ -1455,49 +1726,60 @@ public class RunTicket {
      */
 
     public static void administratorMenu(ArrayList<Event> events,CustomerRepository customerRepository) throws IOException {
+        StringRepo message = new StringRepo();
+        Singleton singleInstance = Singleton.getInstance();
         Scanner kb = new Scanner(System.in);
 
         printLog("Administrator Menu executed.");
         System.out.println("Welcome Administrator!");
-        System.out.println("Enter: (A) Inquire event by ID. (B) Inquire event by name. (C) Add new event. (D) Electronic Summary." +
-                " (E) Display Customer Information:");
-        char enter = kb.nextLine().charAt(0);
-
-        if (enter == 'A'||enter=='a') {
+        System.out.println("Enter: (A) Inquire event by ID. (B) Inquire event by name. (C) Add new event. (D) Electronic Summary." + " (E) Display Customer Information:"+"(M) Main Menu");
+        String enter = kb.nextLine();
+        if (enter.equalsIgnoreCase("a")) {
             printLog("Admin selected Inquire event by ID.");
             System.out.println("What is the ID of the event? Enter the ID event:");
             int eventID=0;
             eventID =checkInvalidInput();
-            printEventId(eventID, events);
-        } else if (enter == 'B'||enter=='b') {
-            printLog("Admin selected inquire event by name.");
-            System.out.println("What is the name of the event? Enter the type event:");
-            String eventName ="";
-            eventName = kb.nextLine();
-            while(!checkEventNameCorrect(eventName)){
-                System.out.println("The event type entered is incorrect try again");
-                eventName = kb.nextLine();
+            printEventId(eventID,events);
+            System.out.println();
+
+            String option ="";
+            System.out.println("Enter 2 to inquire other events"+" \n"+"Enter any key to return to Main Menu ");
+            option = kb.nextLine();
+            if(option.equalsIgnoreCase(String.valueOf(2))){
+                administratorMenu(events,customerRepository);
+            }else{
+                singleInstance.printMessage(message.returningMainMenu());
+                startMenu();
             }
+
+
+        } else if (enter.equalsIgnoreCase("b")) {
+            printLog("Admin selected inquire event by name.");
+            String eventName ="";
+            eventName =checkEventNameCorrect(eventName);
             printEventName(eventName, events);
-        } else if(enter == 'C'||enter=='c'){
+
+        } else if(enter.equalsIgnoreCase("c")){
             printLog("Admin selected add a new event.");
             System.out.println("You selected Add new event:");
             //Here we will read the Venue List provided and then use a method to add new events.
             readVenueCsv(events);
-            for(int i=0;i<events.size();i++){
-                System.out.println(events.get(i).getName());
-            }
-
-        }else if(enter == 'D'||enter=='d'){
+            printEvents(events);
+        }else if(enter.equalsIgnoreCase("d")){
             printLog("Admin selected display electronic tickets from customers.");
             System.out.println("You selected display electronic tickets :D");
             displayElectronicTicket(customerRepository);
-        }else if(enter == 'E'||enter=='e'){
+        }else if(enter.equalsIgnoreCase("e")){
             printLog("Admin selected display customer's information.");
             System.out.println("You selected display customer's information");
             displayCustomerInfo(customerRepository);
-        } else{
+        }else if(enter.equalsIgnoreCase("m")){
+            System.out.println("Returning to Main Menu................");
+            startMenu();
+        }
+        else{
             System.out.println("Error! Input invalid!");
+            administratorMenu(events,customerRepository);
         }
     } //NUEVO
     //////////////////////////////////////////////////////////////////////////////////
@@ -1512,8 +1794,9 @@ public class RunTicket {
      * @throws IOException Throw an IOException.
      */
     public static void displayElectronicTicket(CustomerRepository customerRepository) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter("ElectronicTicketSummary.txt"));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("ElectronicTicketSummary.txt",false));
         Scanner kb = new Scanner(System.in);
+
         int doItAgain=0;
         do{
             System.out.println("Please enter the name:");
@@ -1569,7 +1852,7 @@ public class RunTicket {
 
         //Primero leamos el documento:
         try{
-            BufferedReader br = new BufferedReader(new FileReader("VenueListPA5FINAL.csv"));
+            BufferedReader br = new BufferedReader(new FileReader("VenueListPA3FINAL.csv"));
 
             while((line = br.readLine()) != null){
                 if(csvLine == 0){
@@ -1612,8 +1895,8 @@ public class RunTicket {
         }
     }
     public static boolean verifyVenueInput(String venueInput){
-       // "[Sun Bowl Stadium],[Don Haskins Center],[Magoffin Auditorium],[San Jacinto Plaza]" +
-       //         " [Centennial Plaza]"
+        // "[Sun Bowl Stadium],[Don Haskins Center],[Magoffin Auditorium],[San Jacinto Plaza]" +
+        //         " [Centennial Plaza]"
         if(venueInput.equalsIgnoreCase("Sun Bowl Stadium")|| venueInput.equalsIgnoreCase("Don Haskins Center")){
             return true;
         }
@@ -1778,9 +2061,9 @@ public class RunTicket {
      */
     public static String askEventDate(){
 
-            Scanner kb = new Scanner(System.in);
+        Scanner kb = new Scanner(System.in);
 
-            String eventDate ="";
+        String eventDate ="";
         try {
 
             System.out.println("Please enter the event's date:  HINT->Use the format:MM/DD/YY");
@@ -1793,7 +2076,7 @@ public class RunTicket {
             askEventDate();
 
         }
-       return eventDate;
+        return eventDate;
     }
 
     /**
@@ -1923,7 +2206,7 @@ public class RunTicket {
                 System.out.println(events.get(i).displayAdmin2());
             }
         }//for loop
-    } //NUEVO
+    }
 
     /**
      * Method provided by Christian A. Gomez.
@@ -1978,7 +2261,7 @@ public class RunTicket {
         Event event;
         ArrayList<Event> eventListFinal = new ArrayList<>();
 
-        String fileName = "src/EventListPA4FINAL (1).csv";
+        String fileName = "EventListPA5FINAL.csv";
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             String line = "";
@@ -1996,8 +2279,11 @@ public class RunTicket {
                 if(index[index.length-1]==null){
                     index[index.length-1]=String.valueOf(0);
                 }
-                if(index[MapHeader.get("Fireworks Planned")]==null){
+                if(index[MapHeader.get("Fireworks Planned")]==""){
                     index[MapHeader.get("Fireworks Planned")]="No";
+                }
+                if(index[MapHeader.get("Fireworks Cost")]==""){
+                    index[MapHeader.get("Fireworks Cost")]=String.valueOf(0);
                 }
                 String eventType = index[MapHeader.get("Event Type")];
                 int pctSeatsUnavailable = Integer.parseInt(index[MapHeader.get("Pct Seats Unavailable")]);
@@ -2093,6 +2379,16 @@ public class RunTicket {
                         generalPct,reservedPct,fireWorks,fireCost);
                 event = new Sport(eventID,type,venueType,name,date,time,vip,gold,silver,bronze,general,arena);
                 return event;
+            }else if(avenueName.equals("Magoffin Auditorium")){
+                auditorium = new Auditorium(avenueName,venueType,pctSeats,capacity,cost,vipPct,goldPct,silverPct,bronzePct,
+                        generalPct,reservedPct,fireWorks,fireCost);
+                event = new Sport(eventID,type,venueType,name,date,time,vip,gold,silver,bronze,general,auditorium);
+                return event;
+            }else if(avenueName.equals("San Jacinto Plaza") || avenueName.equals("Centennial Plaza")){
+                openAir = new OpenAir(avenueName,venueType,pctSeats,capacity,cost,vipPct,goldPct,silverPct,bronzePct,
+                        generalPct,reservedPct,fireWorks,fireCost);
+                event = new Sport(eventID,type,venueType,name,date,time,vip,gold,silver,bronze,general,openAir);
+                return event;
             }else{
                 System.out.println("ERROR EN LINEA 136");
             }
@@ -2131,8 +2427,20 @@ public class RunTicket {
                         generalPct,reservedPct,fireWorks,fireCost);
                 event = new Special(eventID,type,venueType,name,date,time,vip,gold,silver,bronze,general,openAir);
                 return event;
+            }else if(avenueName.equals("Magoffin Auditorium")){
+                auditorium = new Auditorium(avenueName,venueType,pctSeats,capacity,cost,vipPct,goldPct,silverPct,bronzePct,
+                        generalPct,reservedPct,fireWorks,fireCost);
+                event = new Special(eventID,type,venueType,name,date,time,vip,gold,silver,bronze,general,auditorium);
+                return event;
+            }else if(avenueName.equals("Sun Bowl Stadium")){
+                stadium = new Stadium(avenueName,venueType,pctSeats,capacity,cost,vipPct,goldPct,silverPct,bronzePct,
+                        generalPct,reservedPct,fireWorks,fireCost);
+                event = new Special(eventID,type,venueType,name,date,time,vip,gold,silver,bronze,general,stadium);
+                return event;
+            }else{
+                System.out.println("ERROR EN LINEA 2155");
             }
-        } else {
+        }else{
             return null;
         }
         return null;
@@ -2153,7 +2461,7 @@ public class RunTicket {
         String line = "";
         int csvLine = 0;
         try{
-            BufferedReader br = new BufferedReader(new FileReader("src/AutoPurchase.csv"));
+            BufferedReader br = new BufferedReader(new FileReader("AutoPurchase.csv"));
             while((line = br.readLine()) != null){
                 if(csvLine==0){
                     csvLine++;
@@ -2188,7 +2496,7 @@ public class RunTicket {
         ArrayList<Customer> customerListFinal = new ArrayList<>();
         CustomerRepository customerRepository = new CustomerRepository();
 
-        String file = "src/CustomerListPA4FINAL.csv";
+        String file = "CustomerListPA5FINAL.csv";
         try{
             BufferedReader br  = new BufferedReader(new FileReader(file));
             String line = "";
@@ -2257,7 +2565,8 @@ public class RunTicket {
                 "," + "Silver pct" + "," + "Bronze pct" + "," + "General pct" + "," + "Reserved" + "," + "Fireworks" +
                 "," + "Fireworks Cost"+","+"Vip seats sold"+","+"Gold seats sold"+","+"Silver seats sold"+
                 "," + "Bronze seats sold"+","+"General seats sold"+","+"Total vip revenue"+","+"Total gold revenue"+
-                "," + "Total silver revenue "+","+"Total bronze revenue"+","+"Total general revenue");
+                "," + "Total silver revenue "+","+"Total bronze revenue"+","+"Total general revenue"+","+"Discount Revenue"+
+                ","+"Taxes Revenue");
         bw.newLine();
         for (int i = 0; i < events.size(); i++) {
             //Sport
@@ -2296,7 +2605,9 @@ public class RunTicket {
                             ","+events.get(i).getStadium().getTotalGoldRevenue()+
                             ","+events.get(i).getStadium().getTotalSilverRevenue()+
                             ","+events.get(i).getStadium().getTotalBronzeRevenue()+
-                            ","+events.get(i).getStadium().getTotalGeneralRevenue());
+                            ","+events.get(i).getStadium().getTotalGeneralRevenue()+
+                            ","+events.get(i).getTotalDiscountCollected()+
+                            ","+events.get(i).getTotalTaxCollected());
                 }else if(events.get(i).getVenueType().equals("Arena")){
                     bw.write(","+events.get(i).getArena().getNameAvenue()+
                             ","+events.get(i).getArena().getPctSeats()+
@@ -2320,7 +2631,61 @@ public class RunTicket {
                             ","+events.get(i).getArena().getTotalGoldRevenue()+
                             ","+events.get(i).getArena().getTotalSilverRevenue()+
                             ","+events.get(i).getArena().getTotalBronzeRevenue()+
-                            ","+events.get(i).getArena().getTotalGeneralRevenue());
+                            ","+events.get(i).getArena().getTotalGeneralRevenue()+
+                            ","+events.get(i).getTotalDiscountCollected()+
+                            ","+events.get(i).getTotalTaxCollected());
+                }else if(events.get(i).getVenueType().equals("Auditorium")){
+                    bw.write(","+events.get(i).getAuditorium().getNameAvenue()+
+                            ","+events.get(i).getAuditorium().getPctSeats()+
+                            ","+events.get(i).getAuditorium().getNameType()+
+                            ","+events.get(i).getAuditorium().getCapacity()+
+                            ","+events.get(i).getAuditorium().getCost()+
+                            ","+events.get(i).getAuditorium().getVipPct()+
+                            ","+events.get(i).getAuditorium().getGoldPct()+
+                            ","+events.get(i).getAuditorium().getSilverPct()+
+                            ","+events.get(i).getAuditorium().getBronzePct()+
+                            ","+events.get(i).getAuditorium().getGeneralPct()+
+                            ","+events.get(i).getAuditorium().getReservedPct()+
+                            ","+events.get(i).getAuditorium().getFireWorks()+
+                            ","+events.get(i).getAuditorium().getFireWorksCost()+
+                            ","+events.get(i).getAuditorium().getTotalSeatsVip()+
+                            ","+events.get(i).getAuditorium().getTotalSeatsGold()+
+                            ","+events.get(i).getAuditorium().getTotalSeatsSilver()+
+                            ","+events.get(i).getAuditorium().getTotalSeatsBronze()+
+                            ","+events.get(i).getAuditorium().getTotalSeatsGeneral()+
+                            ","+events.get(i).getAuditorium().getTotalVipRevenue()+ /////
+                            ","+events.get(i).getAuditorium().getTotalGoldRevenue()+
+                            ","+events.get(i).getAuditorium().getTotalSilverRevenue()+
+                            ","+events.get(i).getAuditorium().getTotalBronzeRevenue()+
+                            ","+events.get(i).getAuditorium().getTotalGeneralRevenue()+
+                            ","+events.get(i).getTotalDiscountCollected()+
+                            ","+events.get(i).getTotalTaxCollected());
+                }else if(events.get(i).getVenueType().equals("Open Air")){
+                    bw.write(","+events.get(i).getOpenAir().getNameAvenue()+
+                            ","+events.get(i).getOpenAir().getPctSeats()+
+                            ","+events.get(i).getOpenAir().getNameType()+
+                            ","+events.get(i).getOpenAir().getCapacity()+
+                            ","+events.get(i).getOpenAir().getCost()+
+                            ","+events.get(i).getOpenAir().getVipPct()+
+                            ","+events.get(i).getOpenAir().getGoldPct()+
+                            ","+events.get(i).getOpenAir().getSilverPct()+
+                            ","+events.get(i).getOpenAir().getBronzePct()+
+                            ","+events.get(i).getOpenAir().getGeneralPct()+
+                            ","+events.get(i).getOpenAir().getReservedPct()+
+                            ","+events.get(i).getOpenAir().getFireWorks()+
+                            ","+events.get(i).getOpenAir().getFireWorksCost()+
+                            ","+events.get(i).getOpenAir().getTotalSeatsVip()+
+                            ","+events.get(i).getOpenAir().getTotalSeatsGold()+
+                            ","+events.get(i).getOpenAir().getTotalSeatsSilver()+
+                            ","+events.get(i).getOpenAir().getTotalSeatsBronze()+
+                            ","+events.get(i).getOpenAir().getTotalSeatsGeneral()+
+                            ","+events.get(i).getOpenAir().getTotalVipRevenue()+ /////
+                            ","+events.get(i).getOpenAir().getTotalGoldRevenue()+
+                            ","+events.get(i).getOpenAir().getTotalSilverRevenue()+
+                            ","+events.get(i).getOpenAir().getTotalBronzeRevenue()+
+                            ","+events.get(i).getOpenAir().getTotalGeneralRevenue()+
+                            ","+events.get(i).getTotalDiscountCollected()+
+                            ","+events.get(i).getTotalTaxCollected());
                 }
                 bw.newLine();
             }// if sport
@@ -2358,7 +2723,9 @@ public class RunTicket {
                             ","+events.get(i).getStadium().getTotalGoldRevenue()+
                             ","+events.get(i).getStadium().getTotalSilverRevenue()+
                             ","+events.get(i).getStadium().getTotalBronzeRevenue()+
-                            ","+events.get(i).getStadium().getTotalGeneralRevenue());
+                            ","+events.get(i).getStadium().getTotalGeneralRevenue()+
+                            ","+events.get(i).getTotalDiscountCollected()+
+                            ","+events.get(i).getTotalTaxCollected());
                 }else if(events.get(i).getVenueType().equals("Auditorium")){
                     bw.write(","+events.get(i).getAuditorium().getNameAvenue()+
                             ","+events.get(i).getAuditorium().getPctSeats()+
@@ -2382,7 +2749,9 @@ public class RunTicket {
                             ","+events.get(i).getAuditorium().getTotalGoldRevenue()+
                             ","+events.get(i).getAuditorium().getTotalSilverRevenue()+
                             ","+events.get(i).getAuditorium().getTotalBronzeRevenue()+
-                            ","+events.get(i).getAuditorium().getTotalGeneralRevenue());
+                            ","+events.get(i).getAuditorium().getTotalGeneralRevenue()+
+                            ","+events.get(i).getTotalDiscountCollected()+
+                            ","+events.get(i).getTotalTaxCollected());
                 }else if(events.get(i).getVenueType().equals("Arena")){
                     bw.write(","+events.get(i).getArena().getNameAvenue()+
                             ","+events.get(i).getArena().getPctSeats()+
@@ -2406,7 +2775,9 @@ public class RunTicket {
                             ","+events.get(i).getArena().getTotalGoldRevenue()+
                             ","+events.get(i).getArena().getTotalSilverRevenue()+
                             ","+events.get(i).getArena().getTotalBronzeRevenue()+
-                            ","+events.get(i).getArena().getTotalGeneralRevenue());
+                            ","+events.get(i).getArena().getTotalGeneralRevenue()+
+                            ","+events.get(i).getTotalDiscountCollected()+
+                            ","+events.get(i).getTotalTaxCollected());
                 }else if(events.get(i).getVenueType().equals("Open Air")){
                     bw.write(","+events.get(i).getOpenAir().getNameAvenue()+
                             ","+events.get(i).getOpenAir().getPctSeats()+
@@ -2430,7 +2801,9 @@ public class RunTicket {
                             ","+events.get(i).getOpenAir().getTotalGoldRevenue()+
                             ","+events.get(i).getOpenAir().getTotalSilverRevenue()+
                             ","+events.get(i).getOpenAir().getTotalBronzeRevenue()+
-                            ","+events.get(i).getOpenAir().getTotalGeneralRevenue());
+                            ","+events.get(i).getOpenAir().getTotalGeneralRevenue()+
+                            ","+events.get(i).getTotalDiscountCollected()+
+                            ","+events.get(i).getTotalTaxCollected());
                 }
                 bw.newLine();
             }//concert
@@ -2469,7 +2842,87 @@ public class RunTicket {
                             ","+events.get(i).getArena().getTotalGoldRevenue()+
                             ","+events.get(i).getArena().getTotalSilverRevenue()+
                             ","+events.get(i).getArena().getTotalBronzeRevenue()+
-                            ","+events.get(i).getArena().getTotalGeneralRevenue());
+                            ","+events.get(i).getArena().getTotalGeneralRevenue()+
+                            ","+events.get(i).getTotalDiscountCollected()+
+                            ","+events.get(i).getTotalTaxCollected());
+                }else if(events.get(i).getVenueType().equals("Stadium")){
+                    bw.write(","+events.get(i).getStadium().getNameAvenue()+
+                            ","+events.get(i).getStadium().getPctSeats()+
+                            ","+events.get(i).getStadium().getNameType()+
+                            ","+events.get(i).getStadium().getCapacity()+
+                            ","+events.get(i).getStadium().getCost()+
+                            ","+events.get(i).getStadium().getVipPct()+
+                            ","+events.get(i).getStadium().getGoldPct()+
+                            ","+events.get(i).getStadium().getSilverPct()+
+                            ","+events.get(i).getStadium().getBronzePct()+
+                            ","+events.get(i).getStadium().getGeneralPct()+
+                            ","+events.get(i).getStadium().getReservedPct()+
+                            ","+events.get(i).getStadium().getFireWorks()+
+                            ","+events.get(i).getStadium().getFireWorksCost()+
+                            ","+events.get(i).getStadium().getTotalSeatsVip()+
+                            ","+events.get(i).getStadium().getTotalSeatsGold()+
+                            ","+events.get(i).getStadium().getTotalSeatsSilver()+
+                            ","+events.get(i).getStadium().getTotalSeatsBronze()+
+                            ","+events.get(i).getStadium().getTotalSeatsGeneral()+
+                            ","+events.get(i).getStadium().getTotalVipRevenue()+ /////
+                            ","+events.get(i).getStadium().getTotalGoldRevenue()+
+                            ","+events.get(i).getStadium().getTotalSilverRevenue()+
+                            ","+events.get(i).getStadium().getTotalBronzeRevenue()+
+                            ","+events.get(i).getStadium().getTotalGeneralRevenue()+
+                            ","+events.get(i).getTotalDiscountCollected()+
+                            ","+events.get(i).getTotalTaxCollected());
+                }else if(events.get(i).getVenueType().equals("Open Air")){
+                    bw.write(","+events.get(i).getOpenAir().getNameAvenue()+
+                            ","+events.get(i).getOpenAir().getPctSeats()+
+                            ","+events.get(i).getOpenAir().getNameType()+
+                            ","+events.get(i).getOpenAir().getCapacity()+
+                            ","+events.get(i).getOpenAir().getCost()+
+                            ","+events.get(i).getOpenAir().getVipPct()+
+                            ","+events.get(i).getOpenAir().getGoldPct()+
+                            ","+events.get(i).getOpenAir().getSilverPct()+
+                            ","+events.get(i).getOpenAir().getBronzePct()+
+                            ","+events.get(i).getOpenAir().getGeneralPct()+
+                            ","+events.get(i).getOpenAir().getReservedPct()+
+                            ","+events.get(i).getOpenAir().getFireWorks()+
+                            ","+events.get(i).getOpenAir().getFireWorksCost()+
+                            ","+events.get(i).getOpenAir().getTotalSeatsVip()+
+                            ","+events.get(i).getOpenAir().getTotalSeatsGold()+
+                            ","+events.get(i).getOpenAir().getTotalSeatsSilver()+
+                            ","+events.get(i).getOpenAir().getTotalSeatsBronze()+
+                            ","+events.get(i).getOpenAir().getTotalSeatsGeneral()+
+                            ","+events.get(i).getOpenAir().getTotalVipRevenue()+ /////
+                            ","+events.get(i).getOpenAir().getTotalGoldRevenue()+
+                            ","+events.get(i).getOpenAir().getTotalSilverRevenue()+
+                            ","+events.get(i).getOpenAir().getTotalBronzeRevenue()+
+                            ","+events.get(i).getOpenAir().getTotalGeneralRevenue()+
+                            ","+events.get(i).getTotalDiscountCollected()+
+                            ","+events.get(i).getTotalTaxCollected());
+                }else if(events.get(i).getVenueType().equals("Auditorium")){
+                    bw.write(","+events.get(i).getAuditorium().getNameAvenue()+
+                            ","+events.get(i).getAuditorium().getPctSeats()+
+                            ","+events.get(i).getAuditorium().getNameType()+
+                            ","+events.get(i).getAuditorium().getCapacity()+
+                            ","+events.get(i).getAuditorium().getCost()+
+                            ","+events.get(i).getAuditorium().getVipPct()+
+                            ","+events.get(i).getAuditorium().getGoldPct()+
+                            ","+events.get(i).getAuditorium().getSilverPct()+
+                            ","+events.get(i).getAuditorium().getBronzePct()+
+                            ","+events.get(i).getAuditorium().getGeneralPct()+
+                            ","+events.get(i).getAuditorium().getReservedPct()+
+                            ","+events.get(i).getAuditorium().getFireWorks()+
+                            ","+events.get(i).getAuditorium().getFireWorksCost()+
+                            ","+events.get(i).getAuditorium().getTotalSeatsVip()+
+                            ","+events.get(i).getAuditorium().getTotalSeatsGold()+
+                            ","+events.get(i).getAuditorium().getTotalSeatsSilver()+
+                            ","+events.get(i).getAuditorium().getTotalSeatsBronze()+
+                            ","+events.get(i).getAuditorium().getTotalSeatsGeneral()+
+                            ","+events.get(i).getAuditorium().getTotalVipRevenue()+ /////
+                            ","+events.get(i).getAuditorium().getTotalGoldRevenue()+
+                            ","+events.get(i).getAuditorium().getTotalSilverRevenue()+
+                            ","+events.get(i).getAuditorium().getTotalBronzeRevenue()+
+                            ","+events.get(i).getAuditorium().getTotalGeneralRevenue()+
+                            ","+events.get(i).getTotalDiscountCollected()+
+                            ","+events.get(i).getTotalTaxCollected());
                 }
                 bw.newLine();
             }//special

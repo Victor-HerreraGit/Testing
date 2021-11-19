@@ -195,7 +195,7 @@ public class TestMethods {
     * Results: Expectations met
     * */
     public void test8(){
-        RunTicket event = new RunTicket();
+        RunTicketMiner event = new RunTicketMiner();
         ArrayList<Event> listOfSports= event.generateEventList();
         String evenType1 = "Sport";
         String evenType2 = "Concert";
@@ -237,7 +237,7 @@ public class TestMethods {
     }
 
     public static boolean getEventId(int id){
-        RunTicket obj = new RunTicket();
+        RunTicketMiner obj = new RunTicketMiner();
         ArrayList<Event>listOfIds= obj.generateEventList();
 
         for(int i =0;i<listOfIds.size();i++){

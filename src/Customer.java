@@ -32,7 +32,7 @@ public class Customer implements CustomerInterface{
     private String password;
     private Ticket ticket;
 
-    private final Ticket[] tickets = new Ticket[20];
+    private final Ticket[] tickets = new Ticket[500];
     private int size = 0;
     //6 DE OCTUBRE!!!
     private double totalDiscount;
