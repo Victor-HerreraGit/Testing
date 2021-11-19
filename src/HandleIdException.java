@@ -34,12 +34,26 @@ public class HandleIdException extends Exception{
             return b;
         }
     }
-    public int checkInput(int a){
+    public int checkInput(int a) throws HandleIdException{
        if(((Object)a).getClass().getSimpleName()!=((Object)a).getClass().getSimpleName()){
 
            System.out.println("error");
        }
        return 0;
+    }
+    /**
+     * Method provided by Victor Herrera
+     * Throws exception when an input exceeds designated number.
+     * @return a
+     * returns the value of when correct.
+     *
+     * **/
+    public int checkMultipleUsers(int a)throws HandleIdException{
+        if (a<1||a >10) {
+            throw new HandleIdException("Exceeds number of users at once.");
+        } else {
+            return a;
+        }
     }
 
 }
