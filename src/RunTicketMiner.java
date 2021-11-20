@@ -1948,20 +1948,33 @@ public class RunTicketMiner{
             e.printStackTrace();
         }
     }
-    public static boolean verifyVenueInput(String venueInput){
-        // "[Sun Bowl Stadium],[Don Haskins Center],[Magoffin Auditorium],[San Jacinto Plaza]" +
-        //         " [Centennial Plaza]"
-        if(venueInput.equalsIgnoreCase("Sun Bowl Stadium")|| venueInput.equalsIgnoreCase("Don Haskins Center")){
-            return true;
-        }
-        if(venueInput.equalsIgnoreCase("Magoffin Auditorium")|| venueInput.equalsIgnoreCase("San Jacinto Plaza")){
-            return true;
-        }
-        if(venueInput.equalsIgnoreCase("Centennial Plaza")){
-            return true;
-        }
+    public static String verifyVenueInput(){
+        Scanner kb = new Scanner(System.in);
+        String venueInput;
+        System.out.println("Please Select the Correct Venue");
+        venueInput = kb.nextLine();
+        if(venueInput.equalsIgnoreCase("sun bowl stadium")){
+            venueInput = "Sun Bowl Stadium";
+            return venueInput;
+        }else if(venueInput.equalsIgnoreCase("don haskins center")){
+            venueInput = "Don Haskins Center";
+            return venueInput;
+        }else if(venueInput.equalsIgnoreCase("magoffin auditorium")){
+            venueInput = "Magoffin Auditorium";
+            return venueInput;
+        }else if(venueInput.equalsIgnoreCase("san jacinto plaza")){
+            venueInput = "San Jacinto Plaza";
+            return venueInput;
 
-        return false;
+        }else if(venueInput.equalsIgnoreCase("centennial plaza")){
+            venueInput = "Centennial Plaza";
+            return venueInput;
+
+        }else{
+            System.out.println("The venue you selected does not exist please enter correct venue");
+
+        }
+    return verifyVenueInput();
 
     }
     /**
@@ -1972,28 +1985,35 @@ public class RunTicketMiner{
      * @return The event type.
      */
     public static  String askEventType() throws IOException {
+        ArrayList<Event> events = generateEventList();
         CustomerRepository customerRepository = generateCustomerRepository();
-        ArrayList<Event> event = generateEventList();
         Scanner kb = new Scanner(System.in);
+        String venueInput;
 
-        String eventType;
-        System.out.println("Please enter the type of event: [Sport],[Concert],[Special]:");
-        eventType = kb.nextLine();
-        for(int i =0;i<event.size();i++){
-            if(eventType.equalsIgnoreCase(event.get(i).getEventType())){
-                eventType = event.get(i).getEventType();
-                return eventType;
-            }else{
-                System.out.println("You have entered invalid type of event event try again. ");
-                System.out.println("To go back enter A");
-                eventType = kb.nextLine();
-                if(eventType.equalsIgnoreCase("a")){
-                    administratorMenu(event,customerRepository);
-                }
-            }
+        System.out.println("Please select the event to add"+"\n"+"[Sport] [Concert] [Special]");
+        venueInput =kb.nextLine();
+        if(venueInput.equalsIgnoreCase("sport")){
+            venueInput = "Sport";
+            return venueInput;
+        }
+        else if(venueInput.equalsIgnoreCase("concert")){
+            venueInput ="Concert";
+            return venueInput;
+        }
+        else if(venueInput.equalsIgnoreCase("special")){
+            venueInput = "Special";
+            return venueInput;
+        }
+        else if(venueInput.equalsIgnoreCase("a")){
+            administratorMenu(events,customerRepository);
+        }
+        else{
+            System.out.println("The Event input is invalid please try again");
+            System.out.println("To go back please enter (A)");
+
         }
 
-        return eventType;
+        return askEventType();
     }
 
     /**
@@ -2022,11 +2042,9 @@ public class RunTicketMiner{
         System.out.println("[Sun Bowl Stadium],[Don Haskins Center],[Magoffin Auditorium],[San Jacinto Plaza]" +
                 " [Centennial Plaza]");
         // Add method to catch this.
-        String venueInput = kb.nextLine();
-        while(!verifyVenueInput(venueInput)){
-            System.out.println("You have entered an invalid Venue try again");
-            venueInput =kb.nextLine();
-        }
+        String venueInput;
+        venueInput = verifyVenueInput();
+
 
         for(int i=0;i<venueList.size();i++){
             if(venueList.get(i).getNameAvenue().equals(venueInput)){
@@ -2138,7 +2156,6 @@ public class RunTicketMiner{
             if(eventDate.equalsIgnoreCase("a")){
                 administratorMenu(events,customerRepository);
             }
-
            DateChecker check = new Date("MM/dd/yyyy");
            if(check.isValid(eventDate)){
                return eventDate;
@@ -2146,8 +2163,6 @@ public class RunTicketMiner{
            else{
                System.out.println("The Date Format was incorrect Enter correct Date Format");
            }
-
-
         } catch (IOException e){
             System.out.println("File was not verify input file and try again");
         }
@@ -2166,20 +2181,26 @@ public class RunTicketMiner{
         Scanner kb = new Scanner(System.in);
 
         String eventTime ="";
-        System.out.println("To go back enter (A)");
-        System.out.println("Please enter the event's time:");
-        System.out.println("Please use time format Hours:Minutes am or pm");
+
         try {
+
+            System.out.println("Please enter the event's Time: Use the format:HH:mm"+" Please use 24 hour format");
+            System.out.println("To go back enter (A)");
             eventTime = kb.nextLine();
             if(eventTime.equalsIgnoreCase("a")){
                 administratorMenu(events,customerRepository);
             }
-
+            DateChecker check = new Date("HH:mm");
+            if(check.isValid(eventTime)){
+                return eventTime;
+            }
+            else{
+                System.out.println("The Time Format was incorrect Enter correct Time Format");
+            }
         } catch (IOException e){
-            System.out.println("File was not found please verify input file");
+            System.out.println("File was not verify input file and try again");
         }
-
-        return eventTime;
+        return askEventTime();
     }
 
     /**
@@ -2294,22 +2315,34 @@ public class RunTicketMiner{
      * This method will dispplay all the customer's information to the administrator.
      * @param customerRepository An instance of all customers.
      */
-    public static void displayCustomerInfo(CustomerRepository customerRepository){
-        String firstName ="";
-        Scanner kb = new Scanner(System.in);
+    public static void displayCustomerInfo(CustomerRepository customerRepository) throws IOException{
 
-        System.out.println("Enter a name:");
-        firstName = kb.nextLine();
-        while(!(firstNameCheck(firstName,customerRepository))){
-            System.out.println("Name does not exist try again");
-            firstName =kb.nextLine();
-        }
+            ArrayList<Event> events = generateEventList();
+            String firstName = "";
+            Scanner kb = new Scanner(System.in);
+
+            System.out.println("Enter a name:");
+            firstName = kb.nextLine();
+            while (!(firstNameCheck(firstName, customerRepository))) {
+                System.out.println("Name entered does not match records please try again");
+                System.out.println("To go back enter (B)");
+                firstName = kb.nextLine();
+                if (firstName.equalsIgnoreCase("b")) {
+                    administratorMenu(events, customerRepository);
+                }
+
+            }
+
         System.out.println("Please enter the last name:");
 
         String lastName = kb.nextLine();
         while(!(lastNameCheck(firstName,lastName,customerRepository))){
-            System.out.println("Last name does not match with first name try again");
+            System.out.println("Last name entered does not match records please try again");
+            System.out.println("To go back enter (B)");
             lastName = kb.nextLine();
+            if (lastName.equalsIgnoreCase("b")) {
+                administratorMenu(events, customerRepository);
+            }
 
         }
 
