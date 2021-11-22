@@ -20,6 +20,9 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class RunTicketMiner{
@@ -57,6 +60,7 @@ public class RunTicketMiner{
      * After code Review original code invalid input would cause to exit the program
      * To fix this problem the function was made to handle this situation.
      * **/
+    //Modified for Update.
     public static void startMenu(){
         StringRepo message = new StringRepo();
         Singleton singleInstance = Singleton.getInstance();
@@ -97,8 +101,6 @@ public class RunTicketMiner{
                         System.out.println("file not found verify your documents and return again");
                     }
                 }
-
-
     }
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -177,6 +179,7 @@ public class RunTicketMiner{
      * @param numTickets Number of tickets in the order.
      * @param events An ArrayList of Event.
      */
+    // Modified for update
     public static void totalTicketsSport(int i,String ticket, int numTickets, ArrayList<Event> events) {
         if (events.get(i).getVenueType().equals("Stadium")) {
             if (ticket.equalsIgnoreCase("vip")) {
@@ -388,6 +391,7 @@ public class RunTicketMiner{
      * @param numTickets Number of tickets in the order.
      * @param events An ArrayList of Event.
      */
+    // modified for update
     public static void totalTicketsConcert(int i,String ticket, int numTickets, ArrayList<Event> events) {
         if (events.get(i).getVenueType().equals("Stadium")) {
             if (ticket.equalsIgnoreCase("vip")) {
@@ -598,6 +602,7 @@ public class RunTicketMiner{
      * @param numTickets Number of tickets in the order.
      * @param events An ArrayList of Event.
      */
+    // modified for update
     public static void totalTicketsSpecial(int i,String ticket, int numTickets, ArrayList<Event> events) {
         if(events.get(i).getVenueType().equals("Open Air")){
             if (ticket.equalsIgnoreCase("vip")) {
@@ -809,6 +814,7 @@ public class RunTicketMiner{
      * @param events An ArrayList of event.
      * @return total amount to pay without taxes.
      */
+    // Modified for update
     public static double totalAmountSport(int i, String ticket, int numTickets, ArrayList<Event> events) {
         if (ticket.equalsIgnoreCase("vip")) {
             events.get(i).totalSumVip(numTickets);
@@ -838,6 +844,7 @@ public class RunTicketMiner{
      * @param events An ArrayList of event.
      * @return total amount to pay without taxes.
      */
+    // Modified for update
     public static double totalAmountConcert(int i, String ticket, int numTickets, ArrayList<Event> events) {
         if (ticket.equalsIgnoreCase("vip")) {
             events.get(i).totalSumVip(numTickets);
@@ -867,6 +874,7 @@ public class RunTicketMiner{
      * @param events An ArrayList of event.
      * @return total amount to pay without taxes.
      */
+    // Modified Special for update
     public static double totalAmountSpecial(int i, String ticket, int numTickets, ArrayList<Event> events) {
         if (ticket.equalsIgnoreCase("vip")) {
             events.get(i).totalSumVip(numTickets);
@@ -1085,6 +1093,7 @@ public class RunTicketMiner{
      * @param events An ArrayList of Event.
      * @throws IOException Throw if there is any IOException during the process.
      */
+    // Modified for update
     public static void createCustomerOrder(CustomerRepository customerRepository, ArrayList<Event> events){
         StringRepo input = new StringRepo();
         Singleton instance = Singleton.getInstance();
@@ -1211,16 +1220,7 @@ public class RunTicketMiner{
         }
         return false;
     }
-    public static boolean getEventId(int id){
-        ArrayList<Event>listOfIds= generateEventList();
 
-        for(int i =0;i<listOfIds.size();i++){
-            if(listOfIds.get(i).getEventID()==id){
-                return true;
-            }
-        }
-        return false;
-    }
     /**
      * Method Provided by Victor Herrera
      * Method is designed to take user input and check to ensure
@@ -1229,6 +1229,7 @@ public class RunTicketMiner{
      *
      *
      * **/
+    //modified for update
     public static int checkInvalidInput() {
         // Customer Repository has customer information which will be used within this method
         // To return to this option if user decides to.
@@ -1274,6 +1275,7 @@ public class RunTicketMiner{
      * @param ticketType userInput
      *
      * **/
+    // update
     public static boolean verifyTicketType(String ticketType){
         if(ticketType.equalsIgnoreCase("vip")){
             return true;
@@ -1292,25 +1294,8 @@ public class RunTicketMiner{
         }
         return false;
     }
-    /**
-     * method provided Victor herrera
-     * Designed to verify the event information is correct
-     *
-     * **/
-    // Method will not be used.
-    public static boolean verifyEventType(String eventName){
-        if(eventName.equalsIgnoreCase("Sport")){
-            return true;
-        }
-        else if(eventName.equalsIgnoreCase("Concert")){
-            return true;
-        }
-        else if(eventName.equalsIgnoreCase("special")){
-            return true;
-        }
 
-        return false;
-    }
+
     /**
      * Method provided by Victor Herrera
      * @return numTickets
@@ -1354,6 +1339,7 @@ public class RunTicketMiner{
      * @throws IOException Throw if the there is any IOException during the process.
      * Modifications will check to ensure first,last,username,password match correct individual.
      */
+    // modified for update
     public static void individualOrder(CustomerRepository customerRepository, ArrayList<Event> events)  {
         try {
             StringRepo input = new StringRepo();
@@ -1538,6 +1524,8 @@ public class RunTicketMiner{
      * @throws IOException Throw if the there is any IOException during the process.
      */
     public static void multipleOrders(CustomerRepository customerRepository, ArrayList<Event> events){
+        Singleton instance1 = Singleton.getInstance();
+        StringRepo input = new StringRepo();
         try {
             Scanner kb = new Scanner(System.in);
             Ticket ticket;
@@ -1552,11 +1540,11 @@ public class RunTicketMiner{
                 String firstName = kb.nextLine();
                 while (!(firstNameCheck(firstName, customerRepository))) {
                     if (!(firstNameCheck(firstName, customerRepository))) {
-                        System.out.println("The First Name is not in System.");
-                        System.out.println("To return to previous menu enter Main Menu");
+                        instance1.printMessage(input.firstNameMessage());
+                        instance1.printMessage(input.mainMenuLogIn());
                     }
                     firstName = kb.nextLine();
-                    if (firstName.toLowerCase().equals("main menu")) {
+                    if (firstName.equalsIgnoreCase("m")) {
                         System.out.println("Returning to Main Menu.......");
                         startMenu();
                     }
@@ -1570,20 +1558,22 @@ public class RunTicketMiner{
                 int countLast = 0;
                 System.out.println("Please enter your last name:");
                 String lastName = kb.nextLine();
+
                 while (!(lastNameCheck(firstName, lastName, customerRepository))) {
                     if (!(lastNameCheck(firstName, lastName, customerRepository))) {
-                        System.out.println("The Last Name is not in the system or  does not match first name try again");
-                        System.out.println("To return to previous menu enter Main Menu");
+                        instance1.printMessage(input.lastNameMessage());
+                        instance1.printMessage(input.customerLoginWindow());
 
                     }
                     lastName = kb.nextLine();
-                    if (lastName.toLowerCase().equals("main menu")) {
-                        System.out.println("Returning to Main Menu.......");
-                        startMenu();
+                    if(lastName.equalsIgnoreCase("l")){
+                        System.out.println("returning customer to log in.....");
+                        individualOrder(customerRepository,events);
                     }
+
                     countLast++;
                     if (countLast == 4) {
-                        System.out.println("You have reached maximum attempts returning to main Menu......");
+                        instance1.printMessage(input.exceededInput());
                         startMenu();
                     }
 
@@ -1594,17 +1584,18 @@ public class RunTicketMiner{
 
                 while (!(userNameCheck(firstName, lastName, userName, customerRepository))) {
                     if (!(userNameCheck(firstName, lastName, userName, customerRepository))) {
-                        System.out.println("Incorrect UserName or username does not match try again");
-                        System.out.println("To return to previous menu enter Main Menu");
+                        instance1.printMessage(input.userNameMessage());
+                        instance1.printMessage(input.customerLoginWindow());
                     }
                     userName = kb.nextLine();
-                    if (userName.toLowerCase().equals("main menu")) {
-                        System.out.println("Returning to Main Menu.......");
-                        startMenu();
+
+                    if (userName.equalsIgnoreCase("l")) {
+                        System.out.println("Returning to log in.......");
+                        individualOrder(customerRepository,events);
                     }
                     countUserName++;
                     if (countUserName == 4) {
-                        System.out.println("You have reached maximum attempts returning to main Menu......");
+                        instance1.printMessage(input.exceededInput());
                         startMenu();
                     }
 
@@ -1615,19 +1606,20 @@ public class RunTicketMiner{
                 String password = kb.nextLine();
                 while (!(checkUserPassword(firstName, lastName, userName, password, customerRepository))) {
                     if (!(checkUserPassword(firstName, lastName, userName, password, customerRepository))) {
-                        System.out.println("What password did you say? That was a wrong password");
+                        System.out.println("The passwords does not match our records");
                         System.out.println("Try again");
                         System.out.println("You have " + (countPassword--) + " Attempts left");
-                        System.out.println("To return to previous menu enter Main Menu");
+                        instance1.printMessage(input.customerLoginWindow());
                     }
                     password = kb.nextLine();
-                    if (password.toLowerCase().equals("main menu")) {
-                        System.out.println("Returning to Main Menu.......");
+
+                    if (password.equalsIgnoreCase("l")) {
+                        System.out.println("Returning to log in.......");
                         startMenu();
                     }
 
                     if (countPassword == 0) {
-                        System.out.println("You have reached maximum attempts returning to main Menu......");
+                        instance1.printMessage(input.exceededInput());
                         startMenu();
                     }
 
@@ -1644,7 +1636,13 @@ public class RunTicketMiner{
 
                 while (!verifyTicketType(typeTicket)) {
                     System.out.println("Please Select the valid ticket type [Vip] [Gold] [Silver] [Bronze] [General]");
+                    instance1.printMessage(input.customerLoginWindow());
                     typeTicket = kb.nextLine();
+                    if (typeTicket.equalsIgnoreCase("l")) {
+                        System.out.println("Returning to customer log in.......");
+                        individualOrder(customerRepository,events);
+                    }
+
                 }
 
                 int numTickets = 0;
@@ -1675,24 +1673,7 @@ public class RunTicketMiner{
 
     //NUEVO
 
-    /**
-     * Method provided by Christian A. Gomez.
-     * This method will check if the password provided matches with the customer's password.
-     * @param name Customer's first name.
-     * @param lastName Customer's Last name.
-     * @param password Password provided by the user.
-     * @param customerRepository An instance of all customers.
-     * @return True or False if the password matches.
-     */
-    private static boolean password(String name,String lastName,String password,CustomerRepository customerRepository){
-        for(CustomerIterator iterator = customerRepository.getMethod(); iterator.hasNext();){
-            Customer customer = iterator.next();
-            if(customer.getFirstName().equals(name) && customer.getLastName().equals(lastName)){
-                return customer.getPassword().equals(password);
-            }
-        }
-        return false;
-    }
+
 
     /**
      * Method provided by Christian A. Gomez.
@@ -1752,27 +1733,40 @@ public class RunTicketMiner{
         printLog("User:" + name + " has a ticket now.");
     } //NUEVO
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static String checkEventNameCorrect (String name) throws IOException {
-        Scanner kb = new Scanner(System.in);
-        ArrayList<Event> events = generateEventList();
-        CustomerRepository customerRepository = generateCustomerRepository();
-        System.out.println("Please Enter Event Name");
-        System.out.println("To return to Admin enter A");
-        name =kb.nextLine();
-        for(int i=0;i<events.size();i++){
-            if(name.equalsIgnoreCase(events.get(i).getName())){
-                name = events.get(i).getName();
-                System.out.println(name);
-                return name;
+   /**
+    * Method provided by Christian A. Gomez
+    * Modified by Victor Herrera
+    * Designed to verify Event Name is in consistancy with File input
+    * @return name
+    * returns Event name when corect
+    * **/
+    public static String checkEventNameCorrect (String name){
+        try {
+            Scanner kb = new Scanner(System.in);
+            ArrayList<Event> events = generateEventList();
+            CustomerRepository customerRepository = generateCustomerRepository();
+            System.out.println("Please Enter Event Name");
+            System.out.println("To return to Admin enter A");
+            name = kb.nextLine();
+            for (int i = 0; i < events.size(); i++) {
+                if (name.equalsIgnoreCase(events.get(i).getName())) {
+                    name = events.get(i).getName();
+                    System.out.println(name);
+                    return name;
+                }
+                if (name.equalsIgnoreCase("a")) {
+                    administratorMenu(events, customerRepository);
+                }
+
             }
-            if(name.equalsIgnoreCase("a")){
-                administratorMenu(events,customerRepository);
-            }
+        }catch (IOException e){
+            System.out.println( e);
         }
         return checkEventNameCorrect(name);
     }
     /**
      * Method provided by Christian A. Gomez.
+     * Modifications made by Victor Herrera
      * This method will display administrator options.
      * @param events An ArrayList of Event.
      * @param customerRepository An instance of all customers.
@@ -1848,6 +1842,7 @@ public class RunTicketMiner{
      * @throws IOException Throw an IOException.
      */
     public static void displayElectronicTicket(CustomerRepository customerRepository) throws IOException {
+        ArrayList<Event> events = generateEventList();
         BufferedWriter bw = new BufferedWriter(new FileWriter("ElectronicTicketSummary.txt",false));
         Scanner kb = new Scanner(System.in);
 
@@ -1858,14 +1853,22 @@ public class RunTicketMiner{
 
             while(!(firstNameCheck(name,customerRepository))){
                 System.out.println("Name does not exist try again");
+                System.out.println("To go back enter (L)");
                 name =kb.nextLine();
+                if(name.equalsIgnoreCase("l")){
+                    administratorMenu(events,customerRepository);
+                }
             }
             System.out.println("Please enter the last name:");
 
             String lastName = kb.nextLine();
             while(!(lastNameCheck(name,lastName,customerRepository))){
-                System.out.println("Last name does not match with first name try again");
+                System.out.println("Last name does not match records please enter correct last name");
+                System.out.println("To go back enter (L)");
                 lastName = kb.nextLine();
+                if(lastName.equalsIgnoreCase("l")){
+                    administratorMenu(events,customerRepository);
+                }
 
             }
 
@@ -1878,8 +1881,16 @@ public class RunTicketMiner{
             System.out.println("Wanna try with another customer? yes/no");
             String ans = kb.nextLine();
 
-            if(ans.toLowerCase().equals("no")){
+
+
+            if(ans.equalsIgnoreCase("no")){
                 doItAgain=1;
+            }
+            else if(ans.equalsIgnoreCase("y")||ans.equalsIgnoreCase("yes")){
+                doItAgain=0;
+            }
+            else{
+                System.out.println("invalid input");
             }
         }while(doItAgain==0);
         bw.close();
@@ -1948,11 +1959,25 @@ public class RunTicketMiner{
             e.printStackTrace();
         }
     }
-    public static String verifyVenueInput(){
+    /**
+     * Method provided by Victor Herrera
+     * @return venue venueInput
+     * Checks user input with valid options
+     * Returns valid venue
+     *
+     *
+     * **/
+    public static String
+    verifyVenueInput(){
+        try{
+        CustomerRepository repository = generateCustomerRepository();
+        ArrayList<Event> events = generateEventList();
         Scanner kb = new Scanner(System.in);
         String venueInput;
         System.out.println("Please Select the Correct Venue");
+        System.out.println("To go back enter (L)");
         venueInput = kb.nextLine();
+
         if(venueInput.equalsIgnoreCase("sun bowl stadium")){
             venueInput = "Sun Bowl Stadium";
             return venueInput;
@@ -1970,9 +1995,16 @@ public class RunTicketMiner{
             venueInput = "Centennial Plaza";
             return venueInput;
 
-        }else{
+        }else if(venueInput.equalsIgnoreCase("l")){
+            administratorMenu(events,repository);
+        }
+        else{
             System.out.println("The venue you selected does not exist please enter correct venue");
 
+        }
+
+        }catch (IOException e){
+            System.out.println("File was not found");
         }
     return verifyVenueInput();
 
@@ -1984,6 +2016,7 @@ public class RunTicketMiner{
      * This method will ask for the type of Event that wants to add.
      * @return The event type.
      */
+    // Modified for update.
     public static  String askEventType() throws IOException {
         ArrayList<Event> events = generateEventList();
         CustomerRepository customerRepository = generateCustomerRepository();
@@ -2023,9 +2056,8 @@ public class RunTicketMiner{
      * @param events An ArrayList of Event.
      * @throws IOException Throw an IOException.
      */
+    // Modified for update.
     public static void addNewEvents(ArrayList<Venue> venueList,ArrayList<Event> events) throws IOException {
-        StringRepo eventAnswer = new StringRepo();
-        Scanner kb = new Scanner(System.in);
         printLog("Adding events in process.");
         Event event;
         //Vamos a crear un nuevo evento! Aqui si usaremos lo del Object x = filterVenue();
@@ -2058,6 +2090,7 @@ public class RunTicketMiner{
                 double silverPrice = (generalPrice*2.5);
                 double bronzePrice = (generalPrice*1.5);
                 if(venueName.equals("Sun Bowl Stadium")){
+
                     int capacity = venueList.get(i).getCapacity();
                     int vipPct = calculatePct(capacity,venueList.get(i).getVipPct());
                     int goldPct = calculatePct(capacity,venueList.get(i).getGoldPct());
@@ -2102,7 +2135,7 @@ public class RunTicketMiner{
 
                     events.add(event);
                     printLog("A new event has been added.");
-                }else if(venueName.equals("San Jacinto Plaza") || venueName.equals("Centenial Plaza")){
+                }else if(venueName.equals("San Jacinto Plaza") || venueName.equals("Centennial Plaza")){
                     int capacity = venueList.get(i).getCapacity();
                     int vipPct = calculatePct(capacity,venueList.get(i).getVipPct());
                     int goldPct = calculatePct(capacity,venueList.get(i).getGoldPct());
@@ -2137,11 +2170,15 @@ public class RunTicketMiner{
         return eventName;
     }
 
+
+
     /**
      * Method provided by Christian A. Gomez.
+     * Modifications completed by Victor Herrera
      * This method will ask for the date of the event that wants to add.
      * @return Event date.
      */
+    // modified for update
     public static String askEventDate(){
         ArrayList<Event> events = generateEventList();
         CustomerRepository customerRepository = generateCustomerRepository();
@@ -2157,9 +2194,16 @@ public class RunTicketMiner{
                 administratorMenu(events,customerRepository);
             }
            DateChecker check = new Date("MM/dd/yyyy");
+           if(check.isDatePast(eventDate,"MM/dd/yyyy")) {
+               System.out.println("The Date You have entered is in the Past ");
+               System.out.println("Please Enter a current of future date");
+               return askEventDate();
+           }
+
            if(check.isValid(eventDate)){
                return eventDate;
            }
+
            else{
                System.out.println("The Date Format was incorrect Enter correct Date Format");
            }
@@ -2171,9 +2215,11 @@ public class RunTicketMiner{
 
     /**
      * Method provided by Christian A. Gomez.
+     * Modifications completed by Victor Herrera
      * This method will ask for the time of the event that wants to add.
      * @return Event time.
      */
+    // modified for update
     public static String askEventTime(){
         ArrayList<Event> events = generateEventList();
         CustomerRepository customerRepository = generateCustomerRepository();
@@ -2181,21 +2227,20 @@ public class RunTicketMiner{
         Scanner kb = new Scanner(System.in);
 
         String eventTime ="";
-
         try {
 
-            System.out.println("Please enter the event's Time: Use the format:HH:mm"+" Please use 24 hour format");
+            System.out.println("Please enter the event's Time: Use the format:HH:mm and am or pm");
             System.out.println("To go back enter (A)");
             eventTime = kb.nextLine();
             if(eventTime.equalsIgnoreCase("a")){
                 administratorMenu(events,customerRepository);
             }
-            DateChecker check = new Date("HH:mm");
+            DateChecker check = new Date("hh:mm aa");
             if(check.isValid(eventTime)){
                 return eventTime;
             }
             else{
-                System.out.println("The Time Format was incorrect Enter correct Time Format");
+                System.out.println("The Time Format was incorrect Enter correct Time Format also ensure you ad am or pm for time of day");
             }
         } catch (IOException e){
             System.out.println("File was not verify input file and try again");
@@ -2208,21 +2253,47 @@ public class RunTicketMiner{
      * This method will ask for the general price of the event that wants to add.
      * @return General price.
      */
-    public static double askGeneralPrice(){
-        Scanner kb = new Scanner(System.in);
-        double generalPrice;
-
-        System.out.println("NOTE: -->Vip,gold,silver and bronze prices will be computed automatically "+
+    public static double askGeneralPrice() {
+        double generalPrice =0;
+        System.out.println("NOTE: -->Vip,gold,silver and bronze prices will be computed automatically " +
                 "using the total amount you enter for the general price <--");
-
-        System.out.println("Please enter the general price: HINT:price must be between 0-500 dollars");
-        generalPrice = kb.nextDouble();
-
-        while(generalPrice<0 || generalPrice>500){
-            System.out.println("Please enter a valid price:");
-            generalPrice = kb.nextDouble();
-        }
+        System.out.println("Please enter the general price: Price must not be less 1 and not exceed 500");
+        generalPrice = priceCheck();
         return generalPrice;
+    }
+    /**
+     * Method provided by Victor Herrera
+     * Method design to check for invalid input and ensure user input
+     * Will be what program expects.
+     *
+     * **/
+    public static double priceCheck(){
+        ArrayList<Event> events = generateEventList();
+        CustomerRepository customerRepository = generateCustomerRepository();
+        double price = 0;
+        try {
+            Scanner kb = new Scanner(System.in);
+            System.out.println("Enter Price ");
+            System.out.println("To go back enter (0)");
+            price = kb.nextDouble();
+            if(price ==0){
+                administratorMenu(events,customerRepository);
+            }
+            else if (price < 1 || price > 500) {
+                System.out.println("Please enter valid price");
+                return priceCheck();
+            }else{
+                return price;
+            }
+
+        }catch (InputMismatchException e){
+            System.out.println("Invalid input expecting Integer values");
+            return priceCheck();
+
+        }catch (IOException e){
+            System.out.println("File does not exist please review file again. ");
+        }
+        return price;
     }
 
     /**
@@ -2231,14 +2302,26 @@ public class RunTicketMiner{
      * @return If there will be fireworks.
      */
     public static String askFireworks(){
-        Scanner kb = new Scanner(System.in);
+        String userInput="";
+        try {
+            CustomerRepository customerRepository = generateCustomerRepository();
+            ArrayList<Event> events = generateEventList();
+            Scanner kb = new Scanner(System.in);
 
-        System.out.println("Your event will have fireworks? yes/no");
-        String userInput = kb.nextLine().toLowerCase();
-
-        while(!userInput.equals("yes") && !userInput.equals("no")){
-            System.out.println("Try it again!:");
+            System.out.println("Your event will have fireworks? yes/no");
             userInput = kb.nextLine().toLowerCase();
+
+            while (!userInput.equals("yes") && !userInput.equals("no")) {
+                System.out.println("That is invalid answer please try again");
+                System.out.println("Enter (b) to go back ");
+                userInput = kb.nextLine().toLowerCase();
+                if (userInput.equalsIgnoreCase("b")) {
+                    administratorMenu(events,customerRepository);
+                }
+
+            }
+        }catch(IOException e){
+            System.out.println("File does not exist verify csv file again. ");
         }
         return userInput;
     }
@@ -2252,13 +2335,23 @@ public class RunTicketMiner{
     public static double askFireworksCost(String fireworks){
         Scanner kb = new Scanner(System.in);
 
-        double cost;
-        if(fireworks.equals("yes")){
-            System.out.println("Please enter the cost of the fireworks:");
-            cost = kb.nextDouble();
-        }else{
-            System.out.println("No fireworks. Then cost is 0.");
-            cost = 0;
+        double cost =0;
+
+
+            try {
+                if (fireworks.equals("yes")) {
+                    System.out.println("Please enter the cost of the fireworks:");
+                    cost = kb.nextDouble();
+
+                    return cost;
+
+                } else {
+                    System.out.println("No fireworks. Then cost is 0.");
+                    cost = 0;
+                }
+            }catch(InputMismatchException e){
+                System.out.println("Error expecting Integer value detected invalid input");
+                return askFireworksCost(fireworks);
         }
         return cost;
     }
@@ -2315,12 +2408,11 @@ public class RunTicketMiner{
      * This method will dispplay all the customer's information to the administrator.
      * @param customerRepository An instance of all customers.
      */
+    // Modified for update
     public static void displayCustomerInfo(CustomerRepository customerRepository) throws IOException{
-
             ArrayList<Event> events = generateEventList();
             String firstName = "";
             Scanner kb = new Scanner(System.in);
-
             System.out.println("Enter a name:");
             firstName = kb.nextLine();
             while (!(firstNameCheck(firstName, customerRepository))) {
@@ -2435,6 +2527,7 @@ public class RunTicketMiner{
         }//catch
         return eventListFinal;
     }
+    // update for javadoc
     public static String [] resize(String index[],HashMap hashMap){
         String arr [] = new String[hashMap.size()];
         for(int i =0;i<index.length;i++){
